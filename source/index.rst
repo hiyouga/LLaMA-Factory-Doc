@@ -5,16 +5,13 @@
 
 Welcome!
 ================================
-this is welcome message
+Welcome messgae here ... 
 
-preface
---------------------------------
-this is a demo documentation for sphinx.
-
-
+Documentation
+-----------------------------
 .. toctree::
-   :maxdepth: 2
-   :caption: table
+   :maxdepth: 1
+   :caption: GETTING STARTED
 
    installation/index
    datasets/index
@@ -22,7 +19,7 @@ this is a demo documentation for sphinx.
 
 
 
-Indices and tables
+Test
 ==================
 
 * :ref:`genindex`
