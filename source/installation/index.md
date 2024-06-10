@@ -105,7 +105,7 @@ pip install -e ".[torch,metrics]"
 
 完成安装后，可以通过使用`llamafactory-cli version`来快速校验安装是否成功
 
-如果您能成功看到类似下面的界面，就说明安装成功了。![image-20240611002104700](source/assets/image-20240611002104700.png)
+如果您能成功看到类似下面的界面，就说明安装成功了。![image-20240611002529453](../assets/image-20240611002529453.png)
 
 ## LLaMA-Factory高级选项
 
