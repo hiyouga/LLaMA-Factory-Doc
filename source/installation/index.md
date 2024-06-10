@@ -121,7 +121,7 @@ CUDA_VISIBLE_DEVICES=0 GRADIO_SHARE=1 llamafactory-cli webui
 >  llamafactory-cli webui
 >  ```
 
-如果您能成功看到类似下面的界面，就说明安装成功了。![image-20240610222057439](./source/assets/image-20240610222057439.png)
+如果您能成功看到类似下面的界面，就说明安装成功了。![image-20240610222057439](../assets/image-20240610222057439.png)
 
 ## LLaMA-Factory高级选项
 
