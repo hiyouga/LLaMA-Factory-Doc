@@ -10,7 +10,7 @@ CUDA 是由 NVIDIA 创建的一个并行计算平台和编程模型，它让开�
 
 #### 前置需求
 
-1. 保证当前Linux版本支持Cuda. 在命令行中输入`uname -m && cat /etc/*release`，应当看到类似的输出
+1. 保证当前Linux版本支持CUDA. 在命令行中输入`uname -m && cat /etc/*release`，应当看到类似的输出
 
    ```bash
    x86_64
@@ -42,7 +42,7 @@ CUDA 是由 NVIDIA 创建的一个并行计算平台和编程模型，它让开�
    sudo sh cuda_12.2.0_535.54.03_linux.run
    ```
 
-   **注意**：在确定Cuda自带驱动版本与GPU是否兼容之前，建议取消Driver的安装。![image-20240610221924687](../assets/image-20240610221924687.png)	
+   **注意**：在确定CUDA自带驱动版本与GPU是否兼容之前，建议取消Driver的安装。![image-20240610221924687](../assets/image-20240610221924687.png)	
 
 1. 完成后输入`nvcc -V`检查是否出现对应的版本号，若出现则安装完成。![image-20240610221942403](../assets/image-20240610221942403.png)
 
@@ -103,25 +103,9 @@ pip install -e ".[torch,metrics]"
 
 ## LLaMA-Factory校验
 
-完成安装后，可以通过使用webui来快速校验安装是否成功
+完成安装后，可以通过使用`llamafactory-cli version`来快速校验安装是否成功
 
-### 本地环境
-
-```bash
-CUDA_VISIBLE_DEVICES=0 GRADIO_SHARE=1 llamafactory-cli webui
-```
-
->- 使用时请关闭代理
->
->- 如果您在Windows上使用Powershell运行，请执行以下命令
->
->  ```bash
->  set CUDA_VISIBLE_DEVICES=0
->  set GRADIO_SHARE=1
->  llamafactory-cli webui
->  ```
-
-如果您能成功看到类似下面的界面，就说明安装成功了。![image-20240610222057439](../assets/image-20240610222057439.png)
+如果您能成功看到类似下面的界面，就说明安装成功了。![image-20240611002104700](source/assets/image-20240611002104700.png)
 
 ## LLaMA-Factory高级选项
 
