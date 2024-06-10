@@ -26,7 +26,7 @@ CUDA 是由 NVIDIA 创建的一个并行计算平台和编程模型，它让开�
 
 3. 在以下网址下载所需的CUDA,这里推荐12.2版本.[https://developer.nvidia.com/cuda-gpus](https://developer.nvidia.com/cuda-12-2-0-download-archive).注意需要根据上述输出选择正确版本
 
-   ![image-20240610221819901](../assets/image-20240610221819901.png)
+   ![image-20240610221819901](./source/assets/image-20240610221819901.png)
 
    如果您之前安装过CUDA(例如为12.1版本)，需要先使用`sudo /usr/local/cuda-12.4/bin/cuda-uninstaller`卸载。如果该命令无法运行，可以直接:
 
@@ -42,9 +42,9 @@ CUDA 是由 NVIDIA 创建的一个并行计算平台和编程模型，它让开�
    sudo sh cuda_12.2.0_535.54.03_linux.run
    ```
 
-   **注意**：在确定Cuda自带驱动版本与GPU是否兼容之前，建议取消Driver的安装。![image-20240610221924687](../assets/image-20240610221924687.png)	
+   **注意**：在确定Cuda自带驱动版本与GPU是否兼容之前，建议取消Driver的安装。![image-20240610221924687](./source/assets/image-20240610221924687.png)	
 
-1. 完成后输入`nvcc -V`检查是否出现对应的版本号，若出现则安装完成。![image-20240610221942403](../assets/image-20240610221942403.png)
+1. 完成后输入`nvcc -V`检查是否出现对应的版本号，若出现则安装完成。![image-20240610221942403](./source/assets/image-20240610221942403.png)
 
 ​	  
 
@@ -61,11 +61,11 @@ CUDA 是由 NVIDIA 创建的一个并行计算平台和编程模型，它让开�
    | Microsoft Windows 10 22H2     |
    | Microsoft Windows Server 2022 |
 
-2. 选择对应的版本下载并根据提示安装。![image-20240610222000379](../assets/image-20240610222000379.png)
+2. 选择对应的版本下载并根据提示安装。![image-20240610222000379](./source/assets/image-20240610222000379.png)
 
-3. 打开cmd输入`nvcc -V`，若出现类似内容则安装成功。![image-20240610222014623](../assets/image-20240610222014623.png)
+3. 打开cmd输入`nvcc -V`，若出现类似内容则安装成功。![image-20240610222014623](./source/assets/image-20240610222014623.png)
 
-​		否则，检查系统环境变量，保证CUDA被正确导入。			![image-20240610222021868](../assets/image-20240610222021868.png)
+​		否则，检查系统环境变量，保证CUDA被正确导入。			![image-20240610222021868](./source/assets/image-20240610222021868.png)
 
 
 
@@ -121,7 +121,7 @@ CUDA_VISIBLE_DEVICES=0 GRADIO_SHARE=1 llamafactory-cli webui
 >  llamafactory-cli webui
 >  ```
 
-如果您能成功看到类似下面的界面，就说明安装成功了。![image-20240610222057439](../assets/image-20240610222057439.png)
+如果您能成功看到类似下面的界面，就说明安装成功了。![image-20240610222057439](./source/assets/image-20240610222057439.png)
 
 ## LLaMA-Factory高级选项
 
