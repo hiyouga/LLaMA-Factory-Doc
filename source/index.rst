@@ -14,7 +14,7 @@ Documentation
    :caption: GETTING STARTED
 
    installation/index
-   datasets/index
+   data preparation/index
    training/index
 
 
