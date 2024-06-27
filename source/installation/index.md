@@ -117,9 +117,7 @@ pip install -e ".[torch,metrics]"
 
 如果您想在Windows上启用量化LoRA（QLoRA），请根据您的CUDA版本选择适当的[bitsandbytes](https://github.com/jllllll/bitsandbytes-windows-webui/releases/tag/wheels)发行版本。
 
-```
-bash
-复制代码
+```shell
 pip install https://github.com/jllllll/bitsandbytes-windows-webui/releases/download/wheels/bitsandbytes-0.41.2.post2-py3-none-win_amd64.whl
 ```
 
