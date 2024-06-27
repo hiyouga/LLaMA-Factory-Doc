@@ -6,9 +6,9 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'demo'
-copyright = '2024, ddd'
-author = 'ddd'
+project = 'LLaMa-Factory-Doc'
+copyright = '2024, admin'
+author = 'admin'
 release = '0'
 
 # -- General configuration ---------------------------------------------------

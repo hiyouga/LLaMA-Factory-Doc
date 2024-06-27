@@ -1,9 +1,5 @@
 # 数据处理
 
-
-
-
-
 [dataset_info.json ](https://github.com/hiyouga/LLaMA-Factory/blob/main/data/dataset_info.json)包含了所有可用的数据集。如果您希望使用自定义数据集，请**务必**在 `dataset_info.json` 文件中添加数据集描述，并通过修改 `dataset: 数据集名称` 配置来使用数据集。
 
 目前我们支持 [alpaca](#Alpaca) 格式和 [sharegpt](#Sharegpt) 格式的数据集
@@ -20,7 +16,7 @@
 
 ### 指令监督微调数据集<a id="指令监督微调数据集"></a>
 
-样例数据集： [指令监督微调样例数据集](https://github.com/hiyouga/LLaMA-Factory/blob/main/data/alpaca_zh_demo.json)
+**样例数据集**： [指令监督微调样例数据集](https://github.com/hiyouga/LLaMA-Factory/blob/main/data/alpaca_zh_demo.json)
 
 在进行指令监督微调时，`instruction` 列对应的内容会与 `input` 列对应的内容拼接后作为人类指令，即人类指令为 `instruction\ninput`。而 `output` 列对应的内容为模型回答。
 
@@ -60,7 +56,7 @@
 
 ### 预训练数据集<a id="预训练数据集"></a>
 
-样例数据集：[预训练样例数据集](https://github.com/hiyouga/LLaMA-Factory/blob/main/data/c4_demo.json)
+**样例数据集**：[预训练样例数据集](https://github.com/hiyouga/LLaMA-Factory/blob/main/data/c4_demo.json)
 
 在预训练时，只有 `text` 列中的内容会用于模型学习。
 
@@ -84,7 +80,7 @@
 
 ### 偏好数据集<a id="偏好数据集-1"></a>
 
-样例数据集：[偏好样例数据集](https://github.com/hiyouga/LLaMA-Factory/blob/main/data/dpo_zh_demo.json)
+**样例数据集**：[偏好样例数据集](https://github.com/hiyouga/LLaMA-Factory/blob/main/data/dpo_zh_demo.json)
 
 偏好数据集用于奖励模型训练、DPO 训练和 ORPO 训练。
 
@@ -118,7 +114,7 @@
 
 ### KTO 数据集<a id="KTO数据集"></a>
 
-样例数据集：[KTO样例数据集](https://github.com/hiyouga/LLaMA-Factory/blob/main/data/kto_en_demo.json)
+**样例数据集**：[KTO样例数据集](https://github.com/hiyouga/LLaMA-Factory/blob/main/data/kto_en_demo.json)
 
 KTO 数据集需要额外添加一个 `kto_tag` 列，包含 bool 类型的人类反馈。
 
@@ -153,7 +149,7 @@ KTO 数据集需要额外添加一个 `kto_tag` 列，包含 bool 类型的人�
 
 ### 多模态数据集<a id="多模态数据集"></a>
 
-样例数据集：[多模态样例数据集](https://github.com/hiyouga/LLaMA-Factory/blob/main/data/mllm_demo.json)
+**样例数据集**：[多模态样例数据集](https://github.com/hiyouga/LLaMA-Factory/blob/main/data/mllm_demo.json)
 
 多模态数据集需要额外添加一个 `images` 列，包含输入图像的路径。目前我们仅支持单张图像输入。
 
@@ -202,7 +198,7 @@ KTO 数据集需要额外添加一个 `kto_tag` 列，包含 bool 类型的人�
 
 ### 指令监督微调数据集<a id="指令监督微调数据集-2"></a>
 
-样例数据集：[指令监督微调样例数据集](https://github.com/hiyouga/LLaMA-Factory/blob/main/data/glaive_toolcall_zh_demo.json)
+**样例数据集**：[指令监督微调样例数据集](https://github.com/hiyouga/LLaMA-Factory/blob/main/data/glaive_toolcall_zh_demo.json)
 
 相比 alpaca 格式的数据集，sharegpt 格式支持**更多的角色种类**，例如 human、gpt、observation、function 等等。它们构成一个对象列表呈现在 `conversations` 列中。
 
@@ -255,7 +251,7 @@ KTO 数据集需要额外添加一个 `kto_tag` 列，包含 bool 类型的人�
 
 ### 偏好数据集<a id="偏好数据集-2"></a>
 
-样例数据集：[偏好数据样例数据集](https://github.com/hiyouga/LLaMA-Factory/blob/main/data/dpo_zh_demo.json)
+**样例数据集**：[偏好数据样例数据集](https://github.com/hiyouga/LLaMA-Factory/blob/main/data/dpo_zh_demo.json)
 
 Sharegpt 格式的偏好数据集同样需要在 `chosen` 列中提供更优的消息，并在 `rejected` 列中提供更差的消息。
 
@@ -332,7 +328,7 @@ OpenAI 格式仅仅是 sharegpt 格式的一种特殊情况，其中第一条消
 
 
 
-对于上述格式的数据，`dataset_info.json` 中的*数据集描述*应为：
+对于上述格式的数据，`dataset_info.json` 中的数据集描述应为：
 
 ```json
 "数据集名称": {
