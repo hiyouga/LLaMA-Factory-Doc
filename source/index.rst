@@ -23,4 +23,4 @@ Documentation
 
    installation/index
    data preparation/index
-   training/index
+   training/training
