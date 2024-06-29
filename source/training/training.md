@@ -49,8 +49,8 @@ overwrite_output_dir: true
 # ... 
 ```
 
-<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #1a73e8; background-color: #f8ffff;">
-    注意：需要保证模型model_name_or_path、数据集dateset存在且与template相对应。
+<div style="padding: 1px; margin-bottom: 1px; border: 1px solid #1a73e8; background-color: #f8ffff;">
+    <strong>注意:</strong> 模型model_name_or_path、数据集dateset需要存在且与template相对应。</li>
 </div>
 
 ### 推理
@@ -65,9 +65,8 @@ template: llama3
 finetuning_type: lora
 ```
 
-<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #1a73e8; background-color: #f8ffff;">
-    需要保证模型model_name_or_path存在且与template相对应
-    <br>adapter_name_or_path需要与上面提到的examples/train_lora/llama3_lora_sft.yaml文件中的output_dir相对应
+<div style="padding: 1px; margin-bottom: 1px; border: 1px solid #1a73e8; background-color: #f8ffff;">
+    <strong>注意:</strong> 模型model_name_or_path需要存在且与template相对应。</li>
 </div>
 
 ### 合并
@@ -89,7 +88,9 @@ export_device: cpu
 export_legacy_format: false
 ```
 
-同样地，需要保证：
+<div style="padding: 5px; margin-bottom: 5px; border: 1px solid #1a73e8; background-color: #f8ffff;">
+    <strong>注意:</strong> 
+    <li>模型model_name_or_path需要存在且与template相对应</li><li>adapter_name_or_path需要与微调中的适配器输出路径output_dir相对应。</li></pre>
+<li>合并LoRA适配器时，不要使用量化模型或量化位数</li>
+</div>
 
-1. 模型`model_name_or_path`存在且与`template`相对应
-2. `adapter_name_or_path`需要与微调中的适配器输出路径`output_dir`相对应。
