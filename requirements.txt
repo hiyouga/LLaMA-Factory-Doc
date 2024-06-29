@@ -1,2 +1,2 @@
 myst-parser
-piccolo-theme
+furo
