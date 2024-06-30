@@ -13,9 +13,9 @@ LLaMA Factory 是一个简单易用且高效的大型语言模型（Large Langua
 * 训练算法：（增量）预训练、（多模态）指令监督微调、奖励模型训练、PPO 训练、DPO 训练、KTO 训练、ORPO 训练等等。
 * 运算精度：16 比特全参数微调、冻结微调、LoRA 微调和基于 AQLM/AWQ/GPTQ/LLM.int8/HQQ/EETQ 的 2/3/4/5/6/8 比特 QLoRA 微调。
 * 优化算法：GaLore、BAdam、DoRA、LongLoRA、LLaMA Pro、Mixture-of-Depths、LoRA+、LoftQ 和 PiSSA。
-* 加速算子：FlashAttention-2、Unsloth。
-* 推理引擎：Transformers、vLLM
-* 实验面板：LlamaBoard、TensorBoard、Wandb、MLflow
+* 加速算子：FlashAttention-2 和 Unsloth。
+* 推理引擎：Transformers 和 vLLM。
+* 实验面板：LlamaBoard、TensorBoard、Wandb、MLflow 等等。
 
 Documentation
 -------------
@@ -26,4 +26,4 @@ Documentation
 
   getting_started/installation
   getting_started/data_preparation
-  getting_started/training
+  getting_started/sft
