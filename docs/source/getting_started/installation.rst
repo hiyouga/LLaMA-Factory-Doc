@@ -1,14 +1,17 @@
-# 安装
+安装
+====
 
-## CUDA环境安装
+Linux 系统
+----------
+
+CUDA 设备
++++++++++
 
 CUDA 是由 NVIDIA 创建的一个并行计算平台和编程模型，它让开发者可以使用NVIDIA的GPU进行高性能的并行计算。
 
 首先，在[https://developer.nvidia.com/cuda-gpus](https://developer.nvidia.com/cuda-gpus)查看您的GPU是否支持CUDA
 
-### Linux
 
-#### 前置需求
 
 1. 保证当前Linux版本支持CUDA. 在命令行中输入`uname -m && cat /etc/*release`，应当看到类似的输出
 
@@ -46,7 +49,6 @@ CUDA 是由 NVIDIA 创建的一个并行计算平台和编程模型，它让开�
 
 1. 完成后输入`nvcc -V`检查是否出现对应的版本号，若出现则安装完成。![image-20240610221942403](../assets/image-20240610221942403.png)
 
-​	  
 
 ### Windows
 
@@ -72,24 +74,6 @@ CUDA 是由 NVIDIA 创建的一个并行计算平台和编程模型，它让开�
 ## LLaMA-Factory安装
 
 在安装LLaMA-Factory之前，请确保您安装了下列依赖：
-
-| Mandatory    | Minimum | Recommend |
-| ------------ | ------- | --------- |
-| python       | 3.8     | 3.11      |
-| torch        | 1.13.1  | 2.3.0     |
-| transformers | 4.41.2  | 4.41.2    |
-| datasets     | 2.16.0  | 2.19.2    |
-| accelerate   | 0.30.1  | 0.30.1    |
-| peft         | 0.11.1  | 0.11.1    |
-| trl          | 0.8.6   | 0.9.4     |
-
-| Optional     | Minimum | Recommend |
-| ------------ | ------- | --------- |
-| CUDA         | 11.6    | 12.2      |
-| deepspeed    | 0.10.0  | 0.14.0    |
-| bitsandbytes | 0.39.0  | 0.43.1    |
-| vllm         | 0.4.3   | 0.4.3     |
-| flash-attn   | 2.3.0   | 2.5.9     |
 
 运行以下指令以安装LLaMA-Factory及其依赖：
 
@@ -129,19 +113,41 @@ pip install https://github.com/jllllll/bitsandbytes-windows-webui/releases/downl
 
 如果您有更多需求，请安装对应依赖。
 
-| 名称             | 描述                                                         |
-| ---------------- | ------------------------------------------------------------ |
-| **torch**        | 一个开源的深度学习框架，广泛用于机器学习和人工智能研究中。   |
-| **torch_npu**    | 昇腾开发的Ascend Extension for PyTorch插件，为使用PyTorch框架的开发者提供昇腾AI处理器的超强算力 |
-| **metrics**      | 用于评估和监控机器学习模型性能。                             |
-| **deepspeed**    | 用于分布式训练与推理                                         |
-| **bitsandbytes** | 用于压缩和加速深度学习模型                                   |
-| **vllm**         | 大语言模型高速推理框架                                       |
-| **galore**       | 低显存实现全参微调                                           |
-| **badam**        | 低显存实现全参微调                                           |
-| **gptq**         | 对类GPT大语言模型的量化                                      |
-| **awq**          | 对大语言模型进行激活感知权重量化                             |
-| **aqlm**         | 对大语言模型进行增量语言模型量化                             |
-| **qwen**         | 部署Qwen模型                                                 |
-| **modelscope**   | 支持多种机器学习模型                                         |
-| **quality**      |                                                              |
+.. list-table::
+  :widths: 10 50
+  :header-rows: 1
+
+  * - 名称
+    - 描述
+  * - torch
+    - 开源深度学习框架 PyTorch，广泛用于机器学习和人工智能研究中。
+  * - torch-npu
+    - PyTorch 的昇腾设备兼容包。
+  * - metrics
+    - 用于评估和监控机器学习模型性能。
+  * - deepspeed
+    - 提供了分布式训练所需的零冗余优化器。
+  * - bitsandbytes
+    - 用于大型语言模型量化。
+  * - hqq
+    - 用于大型语言模型量化。
+  * - eetq
+    - 用于大型语言模型量化。
+  * - gptq
+    - 用于加载 GPTQ 量化模型。
+  * - awq
+    - 用于加载 AWQ 量化模型。
+  * - aqlm
+    - 用于加载 AQLM 量化模型。
+  * - vllm
+    - 提供了高速并发的模型推理服务。
+  * - galore
+    - 提供了高效全参微调算法。
+  * - badam
+    - 提供了高效全参微调算法。
+  * - qwen
+    - 提供了加载 Qwen v1 模型所需的包。
+  * - modelscope
+    - 魔搭社区，提供了预训练模型和数据集的下载途径。
+  * - dev
+    - 用于 LLaMA Factory 开发维护。

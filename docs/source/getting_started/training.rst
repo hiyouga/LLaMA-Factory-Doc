@@ -1,16 +1,17 @@
 # 训练
 
-您可以使用命令行或者通过WebUi进行训练推理。
+您可以使用命令行或者通过 WebUI 进行训练推理。
 
 ## 命令行
 
 以下是使用命令行分别进行微调、推理和合并的示例。该例子提供了一个使用Llama3-8B-Instruct模型运行LoRA微调、推理和合并的流程。
 
-```bash
-llamafactory-cli train examples/train_lora/llama3_lora_sft.yaml
-llamafactory-cli chat examples/inference/llama3_lora_sft.yaml
-llamafactory-cli export examples/merge_lora/llama3_lora_sft.yaml
-```
+.. code-block:: bash
+
+    llamafactory-cli train examples/train_lora/llama3_lora_sft.yaml
+    llamafactory-cli chat examples/inference/llama3_lora_sft.yaml
+    llamafactory-cli export examples/merge_lora/llama3_lora_sft.yaml
+
 
 ### 微调
 
