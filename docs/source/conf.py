@@ -24,7 +24,7 @@ exclude_patterns = []
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_title = "Welcome to LLaMA Factory!"
+html_title = "LLaMA Factory"
 html_theme = "furo"
 html_static_path = ["_static"]
 # html_theme_path = ["_themes", ]
