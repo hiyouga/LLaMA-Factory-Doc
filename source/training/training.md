@@ -42,8 +42,8 @@ plot_loss: true
 overwrite_output_dir: true
 
 ### train
-per_device_train_batch_size: 1 # 每个设备上训练的批次大小
-gradient_accumulation_steps: 8 # 梯度积累步数
+per_device_train_batch_size: 1 # 每个设备上训练的批次大小,数字越大占用显存越大
+gradient_accumulation_steps: 8 # 梯度积累步数，数字越大占用显存越小
 learning_rate: 1.0e-4
 num_train_epochs: 3.0
 lr_scheduler_type: cosine # 学习率曲线
@@ -62,6 +62,8 @@ eval_steps: 500
 <div style="padding: 1px; margin-bottom: 1px; border: 1px solid #1a73e8; background-color: #f8ffff;">
     <strong>注意:</strong> 模型model_name_or_path、数据集dateset需要存在且与template相对应。</li>
 </div>
+
+
 
 ### 推理
 
@@ -155,8 +157,4 @@ LLaMA-Factory支持多种训练策略、训练精度及算法，下面提供了�
 | freeze_vision_tower | bool    | 是否在MLLM训练中冻结vision tower，默认值为`True`。           |
 | train_mm_proj_only  | bool    | 是否仅训练MLLM中的多模态投影器，默认值为`False`。            |
 | plot_loss           | bool    | 是否保存训练损失曲线，默认值为`False`。                      |
-
-### 参数效果
-
-...
 
