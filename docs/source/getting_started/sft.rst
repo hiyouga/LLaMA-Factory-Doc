@@ -195,7 +195,7 @@ Finetuning
 
 当您需要进行模型微调时，可以配置 ``FinetuningArguments`` 类中的参数。
 
-.. list-table:: Finetuning 参数
+.. list-table::
    :widths: 30 10 50
    :header-rows: 1
 
