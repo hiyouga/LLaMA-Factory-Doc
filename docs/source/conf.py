@@ -27,4 +27,3 @@ exclude_patterns = []
 html_title = "LLaMA Factory"
 html_theme = "furo"
 html_static_path = ["_static"]
-# html_theme_path = ["_themes", ]
