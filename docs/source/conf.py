@@ -8,7 +8,7 @@
 
 project = "LLaMA Factory"
 copyright = "2024, LlamaFactory team."
-author = "Ziyang Miu, Yaowei Zheng"
+author = "Ziyang Miao, Yaowei Zheng"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
