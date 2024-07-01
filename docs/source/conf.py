@@ -6,27 +6,25 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'LLaMa-Factory-Doc'
-copyright = '2024, admin'
-author = 'admin'
-# release = '0'
+project = "LLaMA Factory"
+copyright = "2024, LlamaFactory team."
+author = "Ziyang Miu, Yaowei Zheng"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = ['myst_parser']
+extensions = ["myst_parser"]
 source_suffix = {
-    '.rst': 'restructuredtext',
-    '.md': 'markdown',
+    ".rst": "restructuredtext",
+    ".md": "markdown",
 }
-templates_path = ['_templates']
+templates_path = ["_templates"]
 exclude_patterns = []
-
-
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_theme = 'furo'
-html_static_path = ['_static']
+html_title = "LLaMA Factory"
+html_theme = "furo"
+html_static_path = ["_static"]
 # html_theme_path = ["_themes", ]
