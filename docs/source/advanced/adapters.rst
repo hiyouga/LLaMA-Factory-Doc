@@ -1,7 +1,12 @@
 调优算法
 =============
 
-full
+LLaMA-Factory支持多种调优算法，包括： :ref:`Full Fine-tuning <full>` 、 :ref:`Freeze <Freeze>` 、 :ref:`LoRA <LoRA>` 、 :ref:`Galore <Galore>` 、 :ref:`BAdam <BAdam>` 。
+
+
+.. _full:
+
+Full Fine-tuning
 --------------------
 如果您需要进行全参微调，请将 ``finetuning_type`` 设置为 ``full`` 。
 下面是一个例子：
@@ -50,7 +55,9 @@ full
     eval_steps: 500
 
 
-freeze
+.. _freeze:
+
+Freeze
 --------------------------
 如果您需要进行冻结微调，请将 ``finetuning_type`` 设置为 ``freeze`` 并且设置相关参数。
 以下是一个例子：
@@ -118,8 +125,9 @@ freeze
      - 除了隐藏层外可以被训练的模块名称，被指定的模块将会被设置为可训练的。使用逗号分隔多个模块。默认值为 ``None``
 
 
+.. _LoRA:
 
-lora
+LoRA
 --------------------------
 如果您需要进行LoRA微调，请将 ``finetuning_type`` 设置为 ``lora`` 并且设置相关参数。
 下面是一个例子：
@@ -219,8 +227,9 @@ lora
 
 
 
+.. _Galore:
 
-galore
+Galore
 ------------------------
 
 当您需要在训练中使用 GaLore（Gradient Low-Rank Projection）算法时，可以通过设置 ``GaloreArguments`` 中的参数进行配置。
@@ -305,6 +314,7 @@ galore
 
 
 
+.. _BAdam:
 
 BAdam
 -------------------------

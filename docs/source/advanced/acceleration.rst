@@ -1,6 +1,11 @@
 加速
 =====================
 
+LLaMA-Factory支持多种加速技术，包括： :ref:`fsdp <fsdp>` 、 :ref:`flash-attention <flashattn>` 、 :ref:`unsloth <sloth>`  。
+
+
+.. _fsdp:
+
 fsdp
 ---------------------------
 PyTorch的全切片数据并行技术（Fully Sharded Data Parallel）能让我们处理更多更大的模型。Huggingface提供了便捷的配置功能。
@@ -69,6 +74,10 @@ PyTorch的全切片数据并行技术（Fully Sharded Data Parallel）能让我�
 
     不要在 FSDP+QLoRA 中使用 GPTQ/AWQ 模型
 
+
+.. _flashattn:
+
+
 flash-attention
 ----------------------------
 
@@ -79,6 +88,10 @@ flash-attention
 .. code-block:: yaml 
 
     flash_attn: fa2
+
+
+
+.. _sloth:
 
 unsloth
 ---------------------------
