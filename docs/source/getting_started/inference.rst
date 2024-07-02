@@ -31,6 +31,17 @@
     finetuning_type: lora
 
 
+vllm推理框架
+------------------------
+若使用vllm推理框架，请在配置中指定： ``infer_backend`` 与 ``vllm_enforce_eager``。
+
+.. code-block:: yaml
+
+    ### examples/inference/llama3_vllm.yaml
+    model_name_or_path: meta-llama/Meta-Llama-3-8B-Instruct
+    template: llama3
+    infer_backend: vllm
+    vllm_enforce_eager: true
 
 
 

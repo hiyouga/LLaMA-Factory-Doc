@@ -29,3 +29,15 @@ Documentation
   getting_started/sft
   getting_started/merge_lora
   getting_started/inference
+
+.. .. toctree::
+..   :maxdepth: 2
+..   :caption: 高级选项
+
+..   advanced/acceleration
+..   advanced/adapters
+..   advanced/distributed
+..   advanced/quantization
+..   advanced/trainers
+
+
