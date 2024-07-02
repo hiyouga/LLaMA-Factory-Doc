@@ -27,3 +27,5 @@ Documentation
   getting_started/installation
   getting_started/data_preparation
   getting_started/sft
+  getting_started/merge_lora
+  getting_started/inference
