@@ -428,6 +428,9 @@ accelerate
 
 
 
+deepspeed配置文件
+++++++++++++++++++++++
+
 .. _ZeRO-0:
 
 ZeRO-0
