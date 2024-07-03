@@ -36,6 +36,7 @@ Documentation
 
   advanced/acceleration
   advanced/adapters
+  advanced/distributed
   advanced/quantization
   advanced/trainers
 
