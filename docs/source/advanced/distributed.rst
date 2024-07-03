@@ -1,6 +1,6 @@
 分布训练
 ==================
-LLaMA-Factory支持单机多卡和多机多卡分布式训练。同时也支持 :ref:`NativeDDP<NativeDDP>`, :ref:`fsdp<fsdp>` 和 :ref:`deepspeed <deepspeed>` 三种分布式训练方式。
+LLaMA-Factory支持单机多卡和多机多卡分布式训练。同时也支持 :ref:`NativeDDP<NativeDDP>`, :ref:`fsdp<fsdp>` 和 :ref:`deepspeed <deepspeed>` 三种分布式引擎。
 
 
 单机多卡
@@ -38,6 +38,10 @@ NativeDDP是PyTorch的一种分布式训练方式，您可以通过以下命令�
 单机多卡
 +++++++++++++++++++
 
+llamafactory-cli
+***************************
+
+您可以使用llamafactory-cli启动NativeDDP引擎。
 
 .. code-block:: bash
 
@@ -46,10 +50,65 @@ NativeDDP是PyTorch的一种分布式训练方式，您可以通过以下命令�
 如果 ``CUDA_VISIBLE_DEVICES`` 没有指定，则默认使用所有GPU。
 
 
+torchrun
+*******************************
+您也可以使用torchrun指令启动NativeDDP引擎进行单机多卡训练。
+
+.. code-block:: bash
+
+    torchrun  --standalone --nnodes=1 --nproc-per-node=8 train.py 
+
+
+
+accelerate
+***************************
+您还可以使用accelerate启动进行单机多卡训练。
+
+首先运行以下命令，根据需求回答一系列问题后生成配置文件：
+
+.. code-block:: bash
+
+    accelerate config
+
+下面提供一个示例配置文件：
+
+.. code-block:: yaml
+
+    # accelerate_singleNode_config.yaml
+    compute_environment: LOCAL_MACHINE
+    debug: true
+    distributed_type: MULTI_GPU
+    downcast_bf16: 'no'
+    enable_cpu_affinity: false
+    gpu_ids: all
+    machine_rank: 0
+    main_training_function: main
+    mixed_precision: fp16
+    num_machines: 1
+    num_processes: 8
+    rdzv_backend: static
+    same_network: true
+    tpu_env: []
+    tpu_use_cluster: false
+    tpu_use_sudo: false
+    use_cpu: false
+
+
+您可以通过运行以下指令开始训练:
+
+.. code-block:: bash
+
+    accelerate launch \
+    --config_file accelerate_singleNode_config.yaml \
+    train.py llm_config.yaml
+
 .. _torchrun多机多卡:
 
 多机多卡
 ++++++++++++++++++++
+
+llamafactory-cli
+*******************
 
 .. code-block:: bash
 
@@ -77,19 +136,93 @@ NativeDDP是PyTorch的一种分布式训练方式，您可以通过以下命令�
     * - MASTER_PORT
       - 主节点的端口。
 
+torchrun
+******************************
 
+您也可以使用 ``torchrun`` 指令启动NativeDDP引擎进行多机多卡训练。
+
+.. code-block:: bash
+    
+    torchrun --master_port 29500 --nproc_per_node=8 --nnodes=2 --node_rank=0  \
+    --master_addr=192.168.0.1  train.py
+    torchrun --master_port 29500 --nproc_per_node=8 --nnodes=2 --node_rank=1  \
+    --master_addr=192.168.0.1  train.py
+
+accelerate
+***************************
+您还可以使用accelerate启动进行多机多卡训练。
+
+首先运行以下命令，根据需求回答一系列问题后生成配置文件：
+
+.. code-block:: bash
+
+    accelerate config
+
+下面提供一个示例配置文件：
+
+.. code-block:: yaml
+
+    # accelerate_multiNode_config.yaml
+    compute_environment: LOCAL_MACHINE
+    debug: true
+    distributed_type: MULTI_GPU
+    downcast_bf16: 'no'
+    enable_cpu_affinity: false
+    gpu_ids: all
+    machine_rank: 0
+    main_process_ip: '192.168.0.1'
+    main_process_port: 29500
+    main_training_function: main
+    mixed_precision: fp16
+    num_machines: 2
+    num_processes: 16
+    rdzv_backend: static
+    same_network: true
+    tpu_env: []
+    tpu_use_cluster: false
+    tpu_use_sudo: false
+    use_cpu: false
+
+
+您可以通过运行以下指令开始训练:
+
+.. code-block:: bash
+
+    accelerate launch \
+    --config_file accelerate_multiNode_config.yaml \
+    train.py llm_config.yaml
 
 .. _fsdp:
 
 fsdp
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 .. _fsdp单机多卡:
 
 .. _fsdp多机多卡:
 
 
-PyTorch的全切片数据并行技术（Fully Sharded Data Parallel）能让我们处理更多更大的模型。Huggingface提供了便捷的配置功能。
+PyTorch的全切片数据并行技术（Fully Sharded Data Parallel）能让我们处理更多更大的模型。LLaMA-Factory支持使用fsdp引擎进行分布式训练。
+
+
+llamafactory-cli
++++++++++++++++++++++++++
+
+您只需根据需要修改 ``examples/accelerate/fsdp_config.yaml`` 以及 ``examples/extras/fsdp_qlora/llama3_lora_sft.yaml`` ，文件然后运行以下命令即可启动fsdp+QLoRA微调：
+
+.. code-block:: bash
+
+    bash examples/extras/fsdp qlora/train.sh
+
+
+
+accelerate
+++++++++++++++++++++
+
+
+
+此外，您也可以使用accelerate启动fsdp引擎， **节点数与GPU数可以通过 num_machines 和  num_processes 指定**。对此，Huggingface提供了便捷的配置功能。
 只需运行：
 
 .. code-block:: bash
@@ -134,22 +267,13 @@ PyTorch的全切片数据并行技术（Fully Sharded Data Parallel）能让我�
     * 请确保 ``num_processes`` 和实际使用的总GPU数量一致 
 
 
-随后，我们可以使用以下命令启动训练：
+随后，您可以使用以下命令启动训练：
 
 .. code-block:: bash
 
     accelerate launch \
     --config_file fsdp_config.yaml \
     train.py llm_config.yaml
-
-以下是一个示例，您可以通过在LLaMA-Factory根目录下运行进行尝试。
-
-.. code-block:: bash
-
-    accelerate launch \
-    --config_file examples/accelerate/fsdp_config.yaml \
-    src/train.py examples/extras/fsdp_qlora/llama3_lora_sft.yaml
-
 
 .. warning:: 
 
@@ -185,29 +309,122 @@ LLaMA-Factory提供了使用不同阶段的deepspeed配置文件的示例。包�
 单机多卡
 ++++++++++++++++++++++
 
+llamafactory-cli
+*********************
+
+您可以使用llamafactory-cli启动DeepSpeed引擎进行单机多卡训练。
+
 .. code-block:: bash
 
     llamafactory-cli train examples/train_full/llama3_full_sft_ds3.yaml
 
+
+deepspeed
+**************************
+
+您也可以使用deepspeed指令启动DeepSpeed引擎进行单机多卡训练。
+
+.. code-block:: bash
+
+    deepspeed --include localhost:1 your_program.py <normal cl args> --deepspeed ds_config.json
+
+
+.. note:: 
+
+    使用deepspeed指令启动DeepSpeed引擎时您无法使用 ``CUDA_VISIBLE_DEVICES`` 指定GPU。而需要：
+
+    .. code-block:: bash
+
+        deepspeed --include localhost:1 your_program.py <normal cl args> --deepspeed ds_config.json
+    
+    ``--include localhost:1`` 表示只是用本节点的gpu1。
 
 .. _deepspeed多机多卡:
 
 多机多卡
 +++++++++++++++++++++
 
-你可以使用 ``deepspeed`` 命令来启动多机多卡训练。
+
+LLaMA-Factory支持使用deepspeed的多机多卡训练，您可以通过以下命令启动：
+
+.. code-block:: bash
+
+    FORCE_TORCHRUN=1 NNODES=2 RANK=0 MASTER_ADDR=192.168.0.1 MASTER_PORT=29500 llamafactory-cli train examples/train_lora/llama3_lora_sft_ds3.yaml
+    FORCE_TORCHRUN=1 NNODES=2 RANK=1 MASTER_ADDR=192.168.0.1 MASTER_PORT=29500 llamafactory-cli train examples/train_lora/llama3_lora_sft_ds3.yaml
+
+
+deepspeed
+******************************
+
+您也可以使用 ``deepspeed`` 命令来启动多机多卡训练。
 
 .. code-block:: bash
 
     deepspeed --num_gpus 8 --num_nodes 2 --hostfile hostfile --master_addr hostname1 --master_port=9901 \
     your_program.py <normal cl args> --deepspeed ds_config.json
 
-LLaMA-Factory也支持deepspeed的多机多卡训练，您可以通过以下命令启动：
+
+
+.. note::
+
+    * 关于hostfile:
+        hostfile的每一行指定一个节点，每行的格式为 ``<hostname> slots=<num_slots>`` ，
+        其中 ``<hostname>`` 是节点的主机名， ``<num_slots>`` 是该节点上的GPU数量。下面是一个例子：
+        .. code-block:: 
+
+            worker-1 slots=4
+            worker-2 slots=4
+
+        请在 `https://www.deepspeed.ai/getting-started/ <https://www.deepspeed.ai/getting-started/>`_ 了解更多。
+    
+    * 如果没有指定 ``hostfile`` 变量,DeepSpeed会搜索 ``/job/hostfile`` 文件。如果仍未找到，那么DeepSpeed会使用本机上所有可用的GPU。
+
+accelerate
+*******************
+您还可以使用accelerate启动deepspeed引擎。
+首先通过以下命令生成deepspeed配置文件：
+.. code-block:: bash
+
+    accelerate config
+
+下面提供一个配置文件示例：
+
+.. code-block:: yaml
+
+    # deepspeed_config.yaml
+    compute_environment: LOCAL_MACHINE
+    debug: false
+    deepspeed_config:
+        deepspeed_multinode_launcher: standard
+        gradient_accumulation_steps: 8
+        offload_optimizer_device: none
+        offload_param_device: none
+        zero3_init_flag: false
+        zero_stage: 3
+    distributed_type: DEEPSPEED
+    downcast_bf16: 'no'
+    enable_cpu_affinity: false
+    machine_rank: 0
+    main_process_ip: '192.168.0.1'
+    main_process_port: 29500
+    main_training_function: main
+    mixed_precision: fp16
+    num_machines: 2
+    num_processes: 16
+    rdzv_backend: static
+    same_network: true
+    tpu_env: []
+    tpu_use_cluster: false
+    tpu_use_sudo: false
+    use_cpu: false
+
+随后，您可以使用以下命令启动训练：
 
 .. code-block:: bash
 
-    FORCE_TORCHRUN=1 NNODES=2 RANK=0 MASTER_ADDR=192.168.0.1 MASTER_PORT=29500 llamafactory-cli train examples/train_lora/llama3_lora_sft_ds3.yaml
-    FORCE_TORCHRUN=1 NNODES=2 RANK=1 MASTER_ADDR=192.168.0.1 MASTER_PORT=29500 llamafactory-cli train examples/train_lora/llama3_lora_sft_ds3.yaml
+    accelerate launch \
+    --config_file deepspeed_config.yaml \
+    train.py llm_config.yaml
 
 
 
