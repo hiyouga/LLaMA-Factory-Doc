@@ -1,6 +1,16 @@
 分布训练
 ==================
-LLaMA-Factory支持单机多卡和多机多卡分布式训练。同时也支持 :ref:`NativeDDP<NativeDDP>`, :ref:`fsdp<fsdp>` 和 :ref:`deepspeed <deepspeed>` 三种分布式引擎。
+LLaMA-Factory支持单机多卡和多机多卡分布式训练。同时也支持 :ref:`DDP<NativeDDP>`, :ref:`fsdp<fsdp>` 和 :ref:`deepspeed <deepspeed>` 三种分布式引擎。
+
+
+DDP (DistributedDataParallel) 通过实现模型并行和数据并行实现训练加速。
+尽管DDP比DP (DataParallel) 需要更多的代码，但它能够使你进行多机多卡训练。甚至，在单机上运行时DDP也比DP要更快。
+使用DDP的程序需要生成多个进程并且为每个进程创建一个DDP实例，他们之间通过 ``torch.distributed`` 库同步。
+
+fsdp通过全切片数据并行技术（Fully Sharded Data Parallel）来处理更多更大的模型。在DDP中，每张显卡都保留了模型的权重与优化状态的副本。而fsdp不仅切分了模型参数、还切分了优化器状态和梯度。
+fsdp的特点在于：这些在GPU上的被切分的模型参数可以有选择地被卸载到CPU上。此外，在前向传播和反向传播时，被切分的模型参数会合并在一起还原出所有参数。该次运行结束后，参数将被丢弃。
+
+deepspeed是微软开发的分布式训练引擎，并提供ZeRO（Zero Redundancy Optimizer）与offload优化技术，能够极大地减小显存需求并提高训练速度。
 
 
 单机多卡
@@ -26,7 +36,7 @@ LLaMA-Factory支持单机多卡和多机多卡分布式训练。同时也支持 
 NativeDDP
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-NativeDDP是PyTorch的一种分布式训练方式，您可以通过以下命令启动训练：
+NativeDDP是PyTorch提供的一种分布式训练方式，您可以通过以下命令启动训练：
 
 .. _torchrun:
 
@@ -476,35 +486,16 @@ ZeRO-0
 ZeRO-2
 **************************
 
+只需在ZeRO-0的基础上添加 ``zero_optimization``中的 ``stage`` 参数即可。
+
 .. code-block:: yaml
 
     ### ds_z2_config.json
     {
-        "train_batch_size": "auto",
-        "train_micro_batch_size_per_gpu": "auto",
-        "gradient_accumulation_steps": "auto",
-        "gradient_clipping": "auto",
-        "zero_allow_untested_optimizer": true,
-        "fp16": {
-            "enabled": "auto",
-            "loss_scale": 0,
-            "loss_scale_window": 1000,
-            "initial_scale_power": 16,
-            "hysteresis": 2,
-            "min_loss_scale": 1
-        },
-        "bf16": {
-            "enabled": "auto"
-        },
+        ...
         "zero_optimization": {
             "stage": 2,
-            "allgather_partitions": true,
-            "allgather_bucket_size": 5e8,
-            "overlap_comm": true,
-            "reduce_scatter": true,
-            "reduce_bucket_size": 5e8,
-            "contiguous_gradients": true,
-            "round_robin_gradients": true
+        ...
         }
     }
 
@@ -512,45 +503,29 @@ ZeRO-2
 
 .. _zero2O:
 
+
 ZeRO-2+offload
 *************************
+
+
+只需在ZeRO-0的基础上在 ``zero_optimization``中添加 ``offload_optimizer`` 参数即可。
 
 
 .. code-block:: yaml
 
     ### ds_z2_offload_config.json
     {
-    "train_batch_size": "auto",
-    "train_micro_batch_size_per_gpu": "auto",
-    "gradient_accumulation_steps": "auto",
-    "gradient_clipping": "auto",
-    "zero_allow_untested_optimizer": true,
-    "fp16": {
-        "enabled": "auto",
-        "loss_scale": 0,
-        "loss_scale_window": 1000,
-        "initial_scale_power": 16,
-        "hysteresis": 2,
-        "min_loss_scale": 1
-    },
-    "bf16": {
-        "enabled": "auto"
-    },
-    "zero_optimization": {
-        "stage": 2,
-        "offload_optimizer": {
-        "device": "cpu",
-        "pin_memory": true
-        },
-        "allgather_partitions": true,
-        "allgather_bucket_size": 5e8,
-        "overlap_comm": true,
-        "reduce_scatter": true,
-        "reduce_bucket_size": 5e8,
-        "contiguous_gradients": true,
-        "round_robin_gradients": true
+        ...
+        "zero_optimization": {
+            "stage": 2,
+            "offload_optimizer": {
+            "device": "cpu",
+            "pin_memory": true
+            },
+        ...
+        }
     }
-    }
+
 
 
 .. _ZeRO-3:
@@ -558,38 +533,25 @@ ZeRO-2+offload
 ZeRO-3
 ****************************
 
+只需在ZeRO-0的基础上修改 ``zero_optimization``中的参数。
+
 .. code-block:: yaml
 
     ### ds_z3_config.json
     {
-    "train_batch_size": "auto",
-    "train_micro_batch_size_per_gpu": "auto",
-    "gradient_accumulation_steps": "auto",
-    "gradient_clipping": "auto",
-    "zero_allow_untested_optimizer": true,
-    "fp16": {
-        "enabled": "auto",
-        "loss_scale": 0,
-        "loss_scale_window": 1000,
-        "initial_scale_power": 16,
-        "hysteresis": 2,
-        "min_loss_scale": 1
-    },
-    "bf16": {
-        "enabled": "auto"
-    },
-    "zero_optimization": {
-        "stage": 3,
-        "overlap_comm": true,
-        "contiguous_gradients": true,
-        "sub_group_size": 1e9,
-        "reduce_bucket_size": "auto",
-        "stage3_prefetch_bucket_size": "auto",
-        "stage3_param_persistence_threshold": "auto",
-        "stage3_max_live_parameters": 1e9,
-        "stage3_max_reuse_distance": 1e9,
-        "stage3_gather_16bit_weights_on_model_save": true
-    }
+        ...
+        "zero_optimization": {
+            "stage": 3,
+            "overlap_comm": true,
+            "contiguous_gradients": true,
+            "sub_group_size": 1e9,
+            "reduce_bucket_size": "auto",
+            "stage3_prefetch_bucket_size": "auto",
+            "stage3_param_persistence_threshold": "auto",
+            "stage3_max_live_parameters": 1e9,
+            "stage3_max_reuse_distance": 1e9,
+            "stage3_gather_16bit_weights_on_model_save": true
+        }
     }
 
 
@@ -598,47 +560,28 @@ ZeRO-3
 ZeRO-3+offload
 *****************************
 
+只需在ZeRO-3的基础上添加 ``zero_optimization``中的 ``offload_optimizer`` 和 ``offload_param`` 参数即可。
+
 .. code-block:: yaml
+
 
     ### ds_z3_offload_config.json
     {
-    "train_batch_size": "auto",
-    "train_micro_batch_size_per_gpu": "auto",
-    "gradient_accumulation_steps": "auto",
-    "gradient_clipping": "auto",
-    "zero_allow_untested_optimizer": true,
-    "fp16": {
-        "enabled": "auto",
-        "loss_scale": 0,
-        "loss_scale_window": 1000,
-        "initial_scale_power": 16,
-        "hysteresis": 2,
-        "min_loss_scale": 1
-    },
-    "bf16": {
-        "enabled": "auto"
-    },
-    "zero_optimization": {
-        "stage": 3,
-        "offload_optimizer": {
-        "device": "cpu",
-        "pin_memory": true
-        },
-        "offload_param": {
-        "device": "cpu",
-        "pin_memory": true
-        },
-        "overlap_comm": true,
-        "contiguous_gradients": true,
-        "sub_group_size": 1e9,
-        "reduce_bucket_size": "auto",
-        "stage3_prefetch_bucket_size": "auto",
-        "stage3_param_persistence_threshold": "auto",
-        "stage3_max_live_parameters": 1e9,
-        "stage3_max_reuse_distance": 1e9,
-        "stage3_gather_16bit_weights_on_model_save": true
+        ...
+        "zero_optimization": {
+            "stage": 3,
+            "offload_optimizer": {
+            "device": "cpu",
+            "pin_memory": true
+            },
+            "offload_param": {
+            "device": "cpu",
+            "pin_memory": true
+            },
+        ...
+        }
     }
-    }
+
 
 
 .. tip:: 

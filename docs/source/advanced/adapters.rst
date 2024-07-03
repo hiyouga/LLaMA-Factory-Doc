@@ -3,13 +3,40 @@
 
 LLaMA-Factory支持多种调优算法，包括： :ref:`Full Parameter Fine-tuning <full>` 、 :ref:`Freeze <Freeze>` 、 :ref:`LoRA <LoRA>` 、 :ref:`Galore <Galore>` 、 :ref:`BAdam <BAdam>` 。
 
+.. .....
+
+
+.. list-table::
+    :widths: 30 20 10
+    :header-rows: 1
+
+    * - 微调方法
+      - 所需显存
+      - 收敛速度
+    * - Full Parameter Fine-tuning
+      - ..
+      - ..
+    * - Freeze
+      - ..
+      - ..
+    * - LoRA
+      - ..
+      - ..
+    * - Galore
+      - ..
+      - ..
+    * - BAdam
+      - ..
+      - ..
+
 
 .. _full:
 
 Full Parameter Fine-tuning
 --------------------
 全参微调指的是在训练过程中对于预训练模型的所有权重都进行更新，但其对显存的要求是巨大的。
-以 ... 为例子
+
+.. 以 <TODO> 为例子
 
 如果您需要进行全参微调，请将 ``finetuning_type`` 设置为 ``full`` 。
 下面是一个例子：
@@ -28,9 +55,12 @@ Full Parameter Fine-tuning
 Freeze
 --------------------------
 
-冻结微调
+Freeze(冻结微调)指的是在训练过程中只对模型的小部分权重进行更新，这样可以降低对显存的要求。
 
-如果您需要进行冻结微调，请将 ``finetuning_type`` 设置为 ``freeze`` 并且设置相关参数。
+.. <以..>
+
+如果您需要进行冻结微调，请将 ``finetuning_type`` 设置为 ``freeze`` 并且设置相关参数,
+例如冻结的层数 ``freeze_trainable_layers`` 、可训练的模块名称 ``freeze_trainable_modules`` 等。
 
 
 
@@ -108,46 +138,16 @@ LoRA
 
 .. code-block:: yaml
 
-    ### model
-    model_name_or_path: meta-llama/Meta-Llama-3-8B-Instruct
-
+    ...
     ### method
     stage: sft
     do_train: true
     finetuning_type: lora
     lora_target: all
-
-    ### dataset
-    dataset: identity,alpaca_en_demo
-    template: llama3
-    cutoff_len: 1024
-    max_samples: 1000
-    overwrite_cache: true
-    preprocessing_num_workers: 16
-
-    ### output
-    output_dir: saves/llama3-8b/lora/sft
-    logging_steps: 10
-    save_steps: 500
-    plot_loss: true
-    overwrite_output_dir: true
-
-    ### train
-    per_device_train_batch_size: 1
-    gradient_accumulation_steps: 8
-    learning_rate: 1.0e-4
-    num_train_epochs: 3.0
-    lr_scheduler_type: cosine
-    warmup_ratio: 0.1
-    bf16: true
-    ddp_timeout: 180000000
-
-    ### eval
-    val_size: 0.1
-    per_device_eval_batch_size: 1
-    eval_strategy: steps
-    eval_steps: 500
-
+    lora_rank: 8
+    lora_alpha: 16
+    lora_dropout: 0.1
+    ...
 
 
 .. list-table:: LoraArguments
@@ -211,9 +211,7 @@ Galore
 
 .. code-block:: yaml
 
-    ### model
-    model_name_or_path: meta-llama/Meta-Llama-3-8B-Instruct
-
+    ...
     ### method
     stage: sft
     do_train: true
@@ -223,37 +221,8 @@ Galore
     galore_target: mlp,self_attn
     galore_rank: 128
     galore_scale: 2.0
-
-    ### dataset
-    dataset: identity,alpaca_en_demo
-    template: llama3
-    cutoff_len: 1024
-    max_samples: 1000
-    overwrite_cache: true
-    preprocessing_num_workers: 16
-
-    ### output
-    output_dir: saves/llama3-8b/full/sft
-    logging_steps: 10
-    save_steps: 500
-    plot_loss: true
-    overwrite_output_dir: true
-
-    ### train
-    per_device_train_batch_size: 1
-    gradient_accumulation_steps: 1
-    learning_rate: 1.0e-4
-    num_train_epochs: 3.0
-    lr_scheduler_type: cosine
-    warmup_ratio: 0.1
-    pure_bf16: true
-
-    ### eval
-    val_size: 0.1
-    per_device_eval_batch_size: 1
-    eval_strategy: steps
-    eval_steps: 500
-
+    ...
+    
 
 
 
@@ -300,8 +269,7 @@ BAdam是一种内存高效的全参优化方法，您通过配置 ``BAdamArgumen
 .. code-block:: yaml
 
     ### model
-    model_name_or_path: meta-llama/Meta-Llama-3-8B-Instruct
-
+    ...
     ### method
     stage: sft
     do_train: true
@@ -311,36 +279,7 @@ BAdam是一种内存高效的全参优化方法，您通过配置 ``BAdamArgumen
     badam_switch_mode: ascending
     badam_switch_interval: 50
     badam_verbose: 2
-
-    ### dataset
-    dataset: identity,alpaca_en_demo
-    template: llama3
-    cutoff_len: 1024
-    max_samples: 1000
-    overwrite_cache: true
-    preprocessing_num_workers: 16
-
-    ### output
-    output_dir: saves/llama3-8b/full/sft
-    logging_steps: 10
-    save_steps: 500
-    plot_loss: true
-    overwrite_output_dir: true
-
-    ### train
-    per_device_train_batch_size: 1
-    gradient_accumulation_steps: 8
-    learning_rate: 1.0e-4
-    num_train_epochs: 3.0
-    lr_scheduler_type: cosine
-    warmup_ratio: 0.1
-
-    ### eval
-    val_size: 0.1
-    per_device_eval_batch_size: 1
-    eval_strategy: steps
-    eval_steps: 500
-
+    ...
 
 
 .. list-table:: BAdamArgument

@@ -14,6 +14,7 @@ SFT 训练
     llamafactory-cli chat examples/inference/llama3_lora_sft.yaml
     llamafactory-cli export examples/merge_lora/llama3_lora_sft.yaml
 
+.. _sft指令:
 
 微调
 ~~~~~~~~~~~~~~~~~~~~~~~~
