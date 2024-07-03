@@ -136,7 +136,7 @@ Alpaca
 
 
 偏好数据集用于奖励模型训练、DPO 训练和 ORPO 训练。对于系统指令和人类输入，偏好数据集给出了一个更优的回答和一个更差的回答。
-以下是一个例子：
+以下是一个alpaca格式的一个例子：
 
 .. code-block:: json
 
@@ -198,10 +198,7 @@ Alpaca
 KTO 数据集
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**样例数据集**： `KTO样例数据集 <https://github.com/hiyouga/LLaMA-Factory/blob/main/data/kto_en_demo.json/>`_
-
 KTO数据集与偏好数据集类似，但不同于给出一个更优的回答和一个更差的回答，KTO数据集对每一轮问答只给出一个 true/false 的 ``label``。
-
 除了 ``instruction`` 以及 ``input`` 组成的人类最终输入和模型回答 ``output`` ，KTO 数据集还需要额外添加一个 ``kto_tag`` 列（true/false）来表示人类的反馈。
 
 在一轮问答中其格式如下：
@@ -235,8 +232,6 @@ KTO数据集与偏好数据集类似，但不同于给出一个更优的回答�
 
 多模态数据集
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-**样例数据集**： `多模态样例数据集 <https://github.com/hiyouga/LLaMA-Factory/blob/main/data/mllm_demo.json/>`_
 
 多模态数据集需要额外添加一个 ``images`` 列，包含输入图像的路径。目前我们仅支持单张图像输入。
 
@@ -279,7 +274,7 @@ Sharegpt
 * :ref:`OpenAI格式 <OpenAI格式>`
 
 .. note::
-  * sharegpt 格式中的 KTO 数据集和多模态数据集与 alpaca 格式的类似。
+  * sharegpt 格式中的 KTO数据集(`样例 <https://github.com/hiyouga/LLaMA-Factory/blob/main/data/kto_en_demo.json/>`_)和多模态数据集(`样例 <https://github.com/hiyouga/LLaMA-Factory/blob/main/data/mllm_demo.json/>`_) 与 alpaca 格式的类似。
   * 预训练数据集不支持 sharegpt 格式。
 
 
@@ -291,10 +286,34 @@ Sharegpt
 
 **样例数据集**： `指令监督微调样例数据集 <https://github.com/hiyouga/LLaMA-Factory/blob/main/data/glaive_toolcall_zh_demo.json/>`_
 
-相比 ``alpaca`` 格式的数据集， ``sharegpt`` 格式支持 **更多的角色种类**，例如 human、gpt、observation、function 等等。它们构成一个对象列表呈现在 ``conversations`` 列中。
+相比 ``alpaca`` 格式的数据集， ``sharegpt`` 格式支持 **更多** 的角色种类，例如 human、gpt、observation、function 等等。它们构成一个对象列表呈现在 ``conversations`` 列中。
+下面是 ``sharegpt`` 格式的一个例子：
+
+.. code-block:: json
+
+  {
+    "conversations": [
+      {
+        "from": "human",
+        "value": "你好，我出生于1990年5月15日。你能告诉我我今天几岁了吗？"
+      },
+      {
+        "from": "function_call",
+        "value": "{\"name\": \"calculate_age\", \"arguments\": {\"birthdate\": \"1990-05-15\"}}"
+      },
+      {
+        "from": "observation",
+        "value": "{\"age\": 31}"
+      },
+      {
+        "from": "gpt",
+        "value": "根据我的计算，你今天31岁了。"
+      }
+    ],
+    "tools": "[{\"name\": \"calculate_age\", \"description\": \"根据出生日期计算年龄\", \"parameters\": {\"type\": \"object\", \"properties\": {\"birthdate\": {\"type\": \"string\", \"description\": \"出生日期以YYYY-MM-DD格式表示\"}}, \"required\": [\"birthdate\"]}}]"
+  }
 
 注意其中 human 和 observation 必须出现在奇数位置，gpt 和 function 必须出现在偶数位置。
-
 
 .. code-block:: json
 
@@ -323,8 +342,6 @@ Sharegpt
     }
   ]
 
-
-
 对于上述格式的数据， ``dataset_info.json`` 中的 **数据集描述** 应为：
 
 
@@ -345,11 +362,31 @@ Sharegpt
 偏好数据集
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-
 **样例数据集**： `偏好数据样例数据集 <https://github.com/hiyouga/LLaMA-Factory/blob/main/data/dpo_zh_demo.json/>`_
 
-
 Sharegpt 格式的偏好数据集同样需要在 ``chosen`` 列中提供更优的消息，并在 ``rejected`` 列中提供更差的消息。
+下面是一个例子：
+
+.. code-block:: json
+
+  {
+    "conversations": [
+      {
+        "from": "human",
+        "value": "老虎会吃哪一个，草还是树叶？"
+      }
+    ],
+    "chosen": {
+      "from": "gpt",
+      "value": "我很高兴能帮助你解答问题！不过，我必须指出，这个问题本身可能没有意义。老虎是食肉动物，通常不吃草或树叶。它们的饮食主要包括大型有蹄动物、小型哺乳动物和鸟类。\n\n如果你提出这个问题是出于好奇或有特定原因，我很乐意帮助你找到更多关于老虎饮食习惯的信息，或者建议资源让你更多了解这些壮丽的生物。请告诉我如何进一步协助你！"
+    },
+    "rejected": {
+      "from": "gpt",
+      "value": "一只老虎是食肉动物，这意味着它的饮食主要是肉类。老虎主要猎捕和吃其他动物，如鹿和野猪。它们不会选择吃草或树叶，因为这些不是它们自然饮食的一部分。"
+    }
+  }
+
+其格式为：
 
 .. code-block:: json
 
