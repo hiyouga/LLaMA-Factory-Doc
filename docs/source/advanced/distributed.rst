@@ -4,30 +4,56 @@ LLaMA-Factory支持单机多卡和多机多卡分布式训练。同时也支持 
 
 
 DDP (DistributedDataParallel) 通过实现模型并行和数据并行实现训练加速。
-尽管DDP比DP (DataParallel) 需要更多的代码，但它能够使你进行多机多卡训练。甚至，在单机上运行时DDP也比DP要更快。
 使用DDP的程序需要生成多个进程并且为每个进程创建一个DDP实例，他们之间通过 ``torch.distributed`` 库同步。
 
 fsdp通过全切片数据并行技术（Fully Sharded Data Parallel）来处理更多更大的模型。在DDP中，每张显卡都保留了模型的权重与优化状态的副本。而fsdp不仅切分了模型参数、还切分了优化器状态和梯度。
 fsdp的特点在于：这些在GPU上的被切分的模型参数可以有选择地被卸载到CPU上。此外，在前向传播和反向传播时，被切分的模型参数会合并在一起还原出所有参数。该次运行结束后，参数将被丢弃。
 
-deepspeed是微软开发的分布式训练引擎，并提供ZeRO（Zero Redundancy Optimizer）与offload优化技术，能够极大地减小显存需求并提高训练速度。
+deepspeed是微软开发的分布式训练引擎，并提供ZeRO（Zero Redundancy Optimizer）、offload、Sparse Attention、1 bit Adam、流水线并行等优化技术，能够极大地减小显存需求并提高训练速度。
+
+.. list-table::
+    :widths: 30 30 30 30
+    :header-rows: 1
+
+    * - 引擎
+      - 数据切分
+      - 模型切分
+      - 优化器切分
+    * - DDP
+      - 是
+      - 否
+      - 否
+    * - fsdp
+      - 是
+      - 是
+      - 是
+    * - deepspeed
+      - 是
+      - 是
+      - 是
+
+了解更多：
+
+* ddp: `https://pytorch.org/docs/stable/notes/ddp.html <https://pytorch.org/docs/stable/notes/ddp.html>`_
+* fsdp: `https://pytorch.org/tutorials/intermediate/FSDP_tutorial.html <https://pytorch.org/tutorials/intermediate/FSDP_tutorial.html/>`_
+* deepspeed: `https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/ <https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/>`_
 
 
-单机多卡
-------------------------
+.. 单机多卡
+.. ------------------------
 
-* :ref:`NativeDDP单机多卡 <torchrun单机多卡>`
+.. * :ref:`NativeDDP单机多卡 <torchrun单机多卡>`
 
-* :ref:`fsdp单机多卡 <fsdp单机多卡>`
+.. * :ref:`fsdp单机多卡 <fsdp单机多卡>`
 
-* :ref:`deepspeed单机多卡 <deepspeed单机多卡>`
+.. * :ref:`deepspeed单机多卡 <deepspeed单机多卡>`
 
 
-多机多卡
------------------------------
-* :ref:`NativeDDP多机多卡 <torchrun多机多卡>`
-* :ref:`fsdp多机多卡 <fsdp多机多卡>`
-* :ref:`deepspeed多机多卡 <deepspeed多机多卡>`
+.. 多机多卡
+.. -----------------------------
+.. * :ref:`NativeDDP多机多卡 <torchrun多机多卡>`
+.. * :ref:`fsdp多机多卡 <fsdp多机多卡>`
+.. * :ref:`deepspeed多机多卡 <deepspeed多机多卡>`
 
 
 
@@ -205,92 +231,6 @@ accelerate
     --config_file accelerate_multiNode_config.yaml \
     train.py llm_config.yaml
 
-.. _fsdp:
-
-fsdp
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-.. _fsdp单机多卡:
-
-.. _fsdp多机多卡:
-
-
-PyTorch的全切片数据并行技术（Fully Sharded Data Parallel）能让我们处理更多更大的模型。LLaMA-Factory支持使用fsdp引擎进行分布式训练。
-
-
-llamafactory-cli
-+++++++++++++++++++++++++
-
-您只需根据需要修改 ``examples/accelerate/fsdp_config.yaml`` 以及 ``examples/extras/fsdp_qlora/llama3_lora_sft.yaml`` ，文件然后运行以下命令即可启动fsdp+QLoRA微调：
-
-.. code-block:: bash
-
-    bash examples/extras/fsdp qlora/train.sh
-
-
-
-accelerate
-++++++++++++++++++++
-
-
-
-此外，您也可以使用accelerate启动fsdp引擎， **节点数与GPU数可以通过 num_machines 和  num_processes 指定**。对此，Huggingface提供了便捷的配置功能。
-只需运行：
-
-.. code-block:: bash
-
-    accelerate config
-
-
-根据提示回答一系列问题后，我们就可以生成fsdp所需的配置文件。
-
-当然您也可以根据需求自行配置 ``fsdp_config.yaml`` 。
-
-.. code-block:: yaml
-
-    ### /examples/accelerate/fsdp_config.yaml
-    compute_environment: LOCAL_MACHINE
-    debug: false
-    distributed_type: FSDP
-    downcast_bf16: 'no'
-    fsdp_config:
-        fsdp_auto_wrap_policy: TRANSFORMER_BASED_WRAP
-        fsdp_backward_prefetch: BACKWARD_PRE
-        fsdp_forward_prefetch: false
-        fsdp_cpu_ram_efficient_loading: true
-        fsdp_offload_params: true # offload may affect training speed
-        fsdp_sharding_strategy: FULL_SHARD
-        fsdp_state_dict_type: FULL_STATE_DICT
-        fsdp_sync_module_states: true
-        fsdp_use_orig_params: true
-    machine_rank: 0
-    main_training_function: main
-    mixed_precision: fp16 # or bf16
-    num_machines: 1 # the number of nodes
-    num_processes: 2 # the number of GPUs in all nodes
-    rdzv_backend: static
-    same_network: true
-    tpu_env: []
-    tpu_use_cluster: false
-    tpu_use_sudo: false
-    use_cpu: false
-
-.. note:: 
-    * 请确保 ``num_processes`` 和实际使用的总GPU数量一致 
-
-
-随后，您可以使用以下命令启动训练：
-
-.. code-block:: bash
-
-    accelerate launch \
-    --config_file fsdp_config.yaml \
-    train.py llm_config.yaml
-
-.. warning:: 
-
-    不要在 FSDP+QLoRA 中使用 GPTQ/AWQ 模型
 
 
 
@@ -591,4 +531,96 @@ ZeRO-3+offload
 .. note:: 
 
     `https://www.deepspeed.ai/docs/config-json/ <https://www.deepspeed.ai/docs/config-json/>`_ 提供了关于deepspeed配置文件的更详细的介绍。
+
+
+
+
+.. _fsdp:
+
+fsdp
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. _fsdp单机多卡:
+
+.. _fsdp多机多卡:
+
+
+PyTorch的全切片数据并行技术（Fully Sharded Data Parallel）能让我们处理更多更大的模型。LLaMA-Factory支持使用fsdp引擎进行分布式训练。
+
+
+llamafactory-cli
++++++++++++++++++++++++++
+
+您只需根据需要修改 ``examples/accelerate/fsdp_config.yaml`` 以及 ``examples/extras/fsdp_qlora/llama3_lora_sft.yaml`` ，文件然后运行以下命令即可启动fsdp+QLoRA微调：
+
+.. code-block:: bash
+
+    bash examples/extras/fsdp qlora/train.sh
+
+
+
+accelerate
+++++++++++++++++++++
+
+
+
+此外，您也可以使用accelerate启动fsdp引擎， **节点数与GPU数可以通过 num_machines 和  num_processes 指定**。对此，Huggingface提供了便捷的配置功能。
+只需运行：
+
+.. code-block:: bash
+
+    accelerate config
+
+
+根据提示回答一系列问题后，我们就可以生成fsdp所需的配置文件。
+
+当然您也可以根据需求自行配置 ``fsdp_config.yaml`` 。
+
+.. code-block:: yaml
+
+    ### /examples/accelerate/fsdp_config.yaml
+    compute_environment: LOCAL_MACHINE
+    debug: false
+    distributed_type: FSDP
+    downcast_bf16: 'no'
+    fsdp_config:
+        fsdp_auto_wrap_policy: TRANSFORMER_BASED_WRAP
+        fsdp_backward_prefetch: BACKWARD_PRE
+        fsdp_forward_prefetch: false
+        fsdp_cpu_ram_efficient_loading: true
+        fsdp_offload_params: true # offload may affect training speed
+        fsdp_sharding_strategy: FULL_SHARD
+        fsdp_state_dict_type: FULL_STATE_DICT
+        fsdp_sync_module_states: true
+        fsdp_use_orig_params: true
+    machine_rank: 0
+    main_training_function: main
+    mixed_precision: fp16 # or bf16
+    num_machines: 1 # the number of nodes
+    num_processes: 2 # the number of GPUs in all nodes
+    rdzv_backend: static
+    same_network: true
+    tpu_env: []
+    tpu_use_cluster: false
+    tpu_use_sudo: false
+    use_cpu: false
+
+.. note:: 
+    * 请确保 ``num_processes`` 和实际使用的总GPU数量一致 
+
+
+随后，您可以使用以下命令启动训练：
+
+.. code-block:: bash
+
+    accelerate launch \
+    --config_file fsdp_config.yaml \
+    train.py llm_config.yaml
+
+.. warning:: 
+
+    不要在 FSDP+QLoRA 中使用 GPTQ/AWQ 模型
+
+
 
