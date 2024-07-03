@@ -76,9 +76,12 @@ accelerate
 
 首先运行以下命令，根据需求回答一系列问题后生成配置文件：
 
+
 .. code-block:: bash
 
     accelerate config
+
+
 
 下面提供一个示例配置文件：
 
@@ -393,6 +396,7 @@ accelerate
 *******************
 您还可以使用accelerate启动deepspeed引擎。
 首先通过以下命令生成deepspeed配置文件：
+
 .. code-block:: bash
 
     accelerate config
@@ -486,7 +490,7 @@ ZeRO-0
 ZeRO-2
 **************************
 
-只需在ZeRO-0的基础上添加 ``zero_optimization``中的 ``stage`` 参数即可。
+只需在ZeRO-0的基础上添加 ``zero_optimization`` 中的 ``stage`` 参数即可。
 
 .. code-block:: yaml
 
@@ -508,7 +512,7 @@ ZeRO-2+offload
 *************************
 
 
-只需在ZeRO-0的基础上在 ``zero_optimization``中添加 ``offload_optimizer`` 参数即可。
+只需在ZeRO-0的基础上在 ``zero_optimization`` 中添加 ``offload_optimizer`` 参数即可。
 
 
 .. code-block:: yaml
@@ -533,7 +537,7 @@ ZeRO-2+offload
 ZeRO-3
 ****************************
 
-只需在ZeRO-0的基础上修改 ``zero_optimization``中的参数。
+只需在ZeRO-0的基础上修改 ``zero_optimization`` 中的参数。
 
 .. code-block:: yaml
 
@@ -560,7 +564,7 @@ ZeRO-3
 ZeRO-3+offload
 *****************************
 
-只需在ZeRO-3的基础上添加 ``zero_optimization``中的 ``offload_optimizer`` 和 ``offload_param`` 参数即可。
+只需在ZeRO-3的基础上添加 ``zero_optimization`` 中的 ``offload_optimizer`` 和 ``offload_param`` 参数即可。
 
 .. code-block:: yaml
 
@@ -584,7 +588,7 @@ ZeRO-3+offload
 
 
 
-.. tip:: 
+.. note:: 
 
     `https://www.deepspeed.ai/docs/config-json/ <https://www.deepspeed.ai/docs/config-json/>`_ 提供了关于deepspeed配置文件的更详细的介绍。
 
