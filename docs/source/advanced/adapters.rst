@@ -1,65 +1,39 @@
 调优算法
 =============
 
-LLaMA-Factory支持多种调优算法，包括： :ref:`Full Fine-tuning <full>` 、 :ref:`Freeze <Freeze>` 、 :ref:`LoRA <LoRA>` 、 :ref:`Galore <Galore>` 、 :ref:`BAdam <BAdam>` 。
+LLaMA-Factory支持多种调优算法，包括： :ref:`Full Parameter Fine-tuning <full>` 、 :ref:`Freeze <Freeze>` 、 :ref:`LoRA <LoRA>` 、 :ref:`Galore <Galore>` 、 :ref:`BAdam <BAdam>` 。
 
 
 .. _full:
 
-Full Fine-tuning
+Full Parameter Fine-tuning
 --------------------
+全参微调指的是在训练过程中对于预训练模型的所有权重都进行更新，但其对显存的要求是巨大的。
+以 ... 为例子
+
 如果您需要进行全参微调，请将 ``finetuning_type`` 设置为 ``full`` 。
 下面是一个例子：
 
 .. code-block:: yaml
 
     ### examples/train_full/llama3_full_sft_ds3..yaml
-    ### model
-    model_name_or_path: meta-llama/Meta-Llama-3-8B-Instruct
-
-    ### method
-    stage: sft
-    do_train: true
+    # ...
     finetuning_type: full
+    # ...
+    # 如果需要使用deepspeed:
     deepspeed: examples/deepspeed/ds_z3_config.json
-
-    ### dataset
-    dataset: identity,alpaca_en_demo
-    template: llama3
-    cutoff_len: 1024
-    max_samples: 1000
-    overwrite_cache: true
-    preprocessing_num_workers: 16
-
-    ### output
-    output_dir: saves/llama3-8b/full/sft
-    logging_steps: 10
-    save_steps: 500
-    plot_loss: true
-    overwrite_output_dir: true
-
-    ### train
-    per_device_train_batch_size: 1
-    gradient_accumulation_steps: 2
-    learning_rate: 1.0e-4
-    num_train_epochs: 3.0
-    lr_scheduler_type: cosine
-    warmup_ratio: 0.1
-    bf16: true
-    ddp_timeout: 180000000
-
-    ### eval
-    val_size: 0.1
-    per_device_eval_batch_size: 1
-    eval_strategy: steps
-    eval_steps: 500
-
 
 .. _freeze:
 
 Freeze
 --------------------------
+
+冻结微调
+
 如果您需要进行冻结微调，请将 ``finetuning_type`` 设置为 ``freeze`` 并且设置相关参数。
+
+
+
 以下是一个例子：
 
 .. code-block:: yaml
