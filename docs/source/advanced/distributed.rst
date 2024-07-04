@@ -322,6 +322,30 @@ deepspeed
     your_program.py <normal cl args> --deepspeed ds_config.json
 
 
+下面是一个例子：
+
+.. code-block:: bash
+
+    deepspeed --num_gpus 8 src/train.py \
+    --deepspeed examples/deepspeed/ds_z3_config.json \
+    --stage sft \
+    --model_name_or_path meta-llama/Meta-Llama-3-8B-Instruct  \
+    --do_train \
+    --dataset alpaca_en \
+    --template llama3 \
+    --finetuning_type full \
+    --output_dir  saves/llama3-8b/lora/full \
+    --overwrite_cache \
+    --per_device_train_batch_size 1 \
+    --gradient_accumulation_steps 8 \
+    --lr_scheduler_type cosine \
+    --logging_steps 10 \
+    --save_steps 500 \
+    --learning_rate 1e-4 \
+    --num_train_epochs 2.0 \
+    --plot_loss \
+    --bf16
+
 
 .. note::
 
