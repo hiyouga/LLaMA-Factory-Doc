@@ -83,7 +83,12 @@ llamafactory-cli
 
     FORCE_TORCHRUN=1 llamafactory-cli train examples/train_full/llama3_full_sft_ds3.yaml
 
-如果 ``CUDA_VISIBLE_DEVICES`` 没有指定，则默认使用所有GPU。
+如果 ``CUDA_VISIBLE_DEVICES`` 没有指定，则默认使用所有GPU。如果需要指定GPU，例如第0、1个GPU，可以使用：
+
+.. code-block:: bash
+
+    FORCE_TORCHRUN=1 CUDA_VISIBLE_DEVICES=0,1 llamafactory-cli train config/config1.yaml
+
 
 
 torchrun

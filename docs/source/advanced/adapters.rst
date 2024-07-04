@@ -207,6 +207,11 @@ Galore
 ------------------------
 
 当您需要在训练中使用 GaLore（Gradient Low-Rank Projection）算法时，可以通过设置 ``GaloreArguments`` 中的参数进行配置。
+
+.. warning:: 
+
+  不要将LoRA和GaLore/BAdam 一起使用。
+
 下面是一个例子：
 
 .. code-block:: yaml
@@ -262,6 +267,9 @@ Galore
 BAdam
 -------------------------
 
+.. warning:: 
+
+  不要将LoRA和GaLore/BAdam 一起使用。
 
 BAdam是一种内存高效的全参优化方法，您通过配置 ``BAdamArgument`` 中的参数可以对其进行详细设置。
 下面是一个例子：
@@ -279,8 +287,12 @@ BAdam是一种内存高效的全参优化方法，您通过配置 ``BAdamArgumen
     badam_switch_mode: ascending
     badam_switch_interval: 50
     badam_verbose: 2
+    pure_bf16: true
     ...
 
+.. warning:: 
+
+  使用BAdam时请设置 ``finetuning_type``为 ``full``且 ``pure_bf16`` 为 ``True``。
 
 .. list-table:: BAdamArgument
    :widths: 30 10 60
