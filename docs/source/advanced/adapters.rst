@@ -6,28 +6,25 @@ LLaMA-Factory支持多种调优算法，包括： :ref:`Full Parameter Fine-tuni
 .. .....
 
 
-.. list-table::
-    :widths: 30 20 10
+.. list-table:: 以微调Meta-Llama-3-8B-Instruct模型为例
+    :widths: 20 30 30
     :header-rows: 1
+
 
     * - 微调方法
       - 所需显存
-      - 收敛速度
     * - Full Parameter Fine-tuning
-      - ..
-      - ..
+      - * with deepspeed3:
+        * with Galore: 
+        * with BAdam: ~80GB
     * - Freeze
-      - ..
-      - ..
-    * - LoRA
-      - ..
-      - ..
-    * - Galore
-      - ..
-      - ..
-    * - BAdam
-      - ..
-      - ..
+      - * 1 layer: ~32GB
+        * 2 layers: ~34GB
+        * 4 layers: ~38GB
+    * - LoRA(rank=8, alpha=16)
+      - * default:~32GB
+        * use_dora、use_pissa_init: ~34GB
+        * use_rslora: ~28GB
 
 
 .. _full:
@@ -269,7 +266,6 @@ BAdam
 
 .. warning:: 
 
-  不要将LoRA和GaLore/BAdam 一起使用。
 
 BAdam是一种内存高效的全参优化方法，您通过配置 ``BAdamArgument`` 中的参数可以对其进行详细设置。
 下面是一个例子：
@@ -292,7 +288,10 @@ BAdam是一种内存高效的全参优化方法，您通过配置 ``BAdamArgumen
 
 .. warning:: 
 
+  不要将LoRA和GaLore/BAdam 一起使用。
   使用BAdam时请设置 ``finetuning_type`` 为 ``full`` 且 ``pure_bf16`` 为 ``True`` 。
+  若设置 ``badam_mode = layer`` ,请使用DeepSpeed ZeRO3 训练
+
 
 .. list-table:: BAdamArgument
    :widths: 30 10 60

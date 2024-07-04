@@ -274,7 +274,7 @@ llamafactory-cli
 
 .. code-block:: bash
 
-    llamafactory-cli train examples/train_full/llama3_full_sft_ds3.yaml
+    FORCE_TORCHRUN=1 llamafactory-cli train examples/train_full/llama3_full_sft_ds3.yaml
 
 
 deepspeed
