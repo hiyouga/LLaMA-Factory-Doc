@@ -292,7 +292,7 @@ BAdam是一种内存高效的全参优化方法，您通过配置 ``BAdamArgumen
 
 .. warning:: 
 
-  使用BAdam时请设置 ``finetuning_type``为 ``full``且 ``pure_bf16`` 为 ``True``。
+  使用BAdam时请设置 ``finetuning_type`` 为 ``full`` 且 ``pure_bf16`` 为 ``True`` 。
 
 .. list-table:: BAdamArgument
    :widths: 30 10 60
