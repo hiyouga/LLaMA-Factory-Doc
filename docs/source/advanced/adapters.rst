@@ -5,9 +5,6 @@
 
 LLaMA-Factory支持多种调优算法，包括： :ref:`Full Parameter Fine-tuning <full>` 、 :ref:`Freeze <Freeze>` 、 :ref:`LoRA <LoRA>` 、 :ref:`Galore <Galore>` 、 :ref:`BAdam <BAdam>` 。
 
-.. .....
-
-
 .. list-table:: 以微调Meta-Llama-3-8B-Instruct模型为例
     :widths: 20 30 30
     :header-rows: 1
@@ -16,7 +13,7 @@ LLaMA-Factory支持多种调优算法，包括： :ref:`Full Parameter Fine-tuni
     * - 微调方法
       - 所需显存
     * - Full Parameter Fine-tuning
-      - * with deepspeed3:
+      - * with deepspeed ZeRO-3:
         * with Galore: 
         * with BAdam: ~80GB
     * - Freeze
