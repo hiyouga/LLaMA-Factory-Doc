@@ -6,28 +6,33 @@ LLaMA-Factory支持单机多卡和多机多卡分布式训练。同时也支持 
 `DDP <https://pytorch.org/docs/stable/notes/ddp.html>`_ (DistributedDataParallel) 通过实现模型并行和数据并行实现训练加速。
 使用DDP的程序需要生成多个进程并且为每个进程创建一个DDP实例，他们之间通过 ``torch.distributed`` 库同步。
 
-`fsdp <https://pytorch.org/tutorials/intermediate/FSDP_tutorial.html>`_ 通过全切片数据并行技术（Fully Sharded Data Parallel）来处理更多更大的模型。在DDP中，每张显卡都保留了模型的权重与优化状态的副本。而fsdp不仅切分了模型参数、还切分了优化器状态和梯度。
-fsdp的特点在于：这些在GPU上的被切分的模型参数可以有选择地被卸载到CPU上。此外，在前向传播和反向传播时，被切分的模型参数会合并在一起还原出所有参数。该次运行结束后，参数将被丢弃。
+`fsdp <https://pytorch.org/tutorials/intermediate/FSDP_tutorial.html>`_ 通过全切片数据并行技术（Fully Sharded Data Parallel）来处理更多更大的模型。在DDP中，每张GPU都各自保留了一份完整的模型参数和优化器参数。而fsdp切分了模型参数、梯度与优化器参数，使得每张GPU只保留这些参数的一部分。
+除了并行技术之外，fsdp还支持将模型参数卸载至CPU，从而进一步降低显存需求。
 
-`deepspeed <https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/>`_ 是微软开发的分布式训练引擎，并提供ZeRO（Zero Redundancy Optimizer）、offload、Sparse Attention、1 bit Adam、流水线并行等优化技术，能够极大地减小显存需求并提高训练速度。
+`deepspeed <https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/>`_ 是微软开发的分布式训练引擎，并提供ZeRO（Zero Redundancy Optimizer）、offload、Sparse Attention、1 bit Adam、流水线并行等优化技术。
+您可以根据任务需求与设备选择使用。
 
 .. list-table::
-    :widths: 30 30 30 30
+    :widths: 30 30 30 30 30
     :header-rows: 1
 
     * - 引擎
       - 数据切分
       - 模型切分
       - 优化器切分
+      - 参数卸载
     * - DDP
       - 支持
+      - 不支持
       - 不支持
       - 不支持
     * - fsdp
       - 支持
       - 支持
       - 支持
+      - 支持
     * - deepspeed
+      - 支持
       - 支持
       - 支持
       - 支持
@@ -662,4 +667,7 @@ accelerate
 
 显存估计
 +++++++++++++++++
+
+
+.. 
 TODO
