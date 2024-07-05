@@ -3,13 +3,13 @@
 LLaMA-Factory支持单机多卡和多机多卡分布式训练。同时也支持 :ref:`DDP<NativeDDP>`, :ref:`fsdp<fsdp>` 和 :ref:`deepspeed <deepspeed>` 三种分布式引擎。
 
 
-DDP (DistributedDataParallel) 通过实现模型并行和数据并行实现训练加速。
+`DDP <https://pytorch.org/docs/stable/notes/ddp.html>`_ (DistributedDataParallel) 通过实现模型并行和数据并行实现训练加速。
 使用DDP的程序需要生成多个进程并且为每个进程创建一个DDP实例，他们之间通过 ``torch.distributed`` 库同步。
 
-fsdp通过全切片数据并行技术（Fully Sharded Data Parallel）来处理更多更大的模型。在DDP中，每张显卡都保留了模型的权重与优化状态的副本。而fsdp不仅切分了模型参数、还切分了优化器状态和梯度。
+`fsdp <https://pytorch.org/tutorials/intermediate/FSDP_tutorial.html/>`_ 通过全切片数据并行技术（Fully Sharded Data Parallel）来处理更多更大的模型。在DDP中，每张显卡都保留了模型的权重与优化状态的副本。而fsdp不仅切分了模型参数、还切分了优化器状态和梯度。
 fsdp的特点在于：这些在GPU上的被切分的模型参数可以有选择地被卸载到CPU上。此外，在前向传播和反向传播时，被切分的模型参数会合并在一起还原出所有参数。该次运行结束后，参数将被丢弃。
 
-deepspeed是微软开发的分布式训练引擎，并提供ZeRO（Zero Redundancy Optimizer）、offload、Sparse Attention、1 bit Adam、流水线并行等优化技术，能够极大地减小显存需求并提高训练速度。
+`deepspeed <https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/>`_ 是微软开发的分布式训练引擎，并提供ZeRO（Zero Redundancy Optimizer）、offload、Sparse Attention、1 bit Adam、流水线并行等优化技术，能够极大地减小显存需求并提高训练速度。
 
 .. list-table::
     :widths: 30 30 30 30
@@ -20,23 +20,17 @@ deepspeed是微软开发的分布式训练引擎，并提供ZeRO（Zero Redundan
       - 模型切分
       - 优化器切分
     * - DDP
-      - 是
-      - 否
-      - 否
+      - 支持
+      - 不支持
+      - 不支持
     * - fsdp
-      - 是
-      - 是
-      - 是
+      - 支持
+      - 支持
+      - 支持
     * - deepspeed
-      - 是
-      - 是
-      - 是
-
-了解更多：
-
-* ddp: `https://pytorch.org/docs/stable/notes/ddp.html <https://pytorch.org/docs/stable/notes/ddp.html>`_
-* fsdp: `https://pytorch.org/tutorials/intermediate/FSDP_tutorial.html <https://pytorch.org/tutorials/intermediate/FSDP_tutorial.html/>`_
-* deepspeed: `https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/ <https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/>`_
+      - 支持
+      - 支持
+      - 支持
 
 
 .. 单机多卡
@@ -245,6 +239,12 @@ accelerate
 deepspeed
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 DeepSpeed是由微软开发的一个开源深度学习优化库，旨在提高大模型训练的效率和速度。为了在训练中使用deepspeed，您需要先估计训练任务的显存大小，再根据任务需求与资源情况选择合适的ZeRO阶段。
+
+* ZeRO-1: 仅划分优化器参数，每个设备各有一份模型参数与梯度。
+* ZeRO-2: 划分优化器参数与梯度，每个设备各有一份模型参数。
+* ZeRO-3: 划分优化器参数、梯度与模型参数。
+
+关于 :ref:`显存估计`
 
 简单来说：从ZeRO-1到ZeRO-3，阶段数越高，显存需求越小，但是训练速度也依次变慢。此外，设置 ``offload_param=cpu`` 参数会大幅减小显存需求，但会极大地使训练速度减慢。因此，如果您有足够的显存，
 应当使用ZeRO-1，并且确保 ``offload_param=none``。
@@ -652,4 +652,8 @@ accelerate
     不要在 FSDP+QLoRA 中使用 GPTQ/AWQ 模型
 
 
+.. _显存估计:
 
+deepspeed不同阶段显存估计
++++++++++++++++++
+TODO
