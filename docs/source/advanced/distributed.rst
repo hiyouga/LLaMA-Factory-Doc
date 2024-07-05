@@ -238,10 +238,10 @@ accelerate
 
 deepspeed
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-DeepSpeed是由微软开发的一个开源深度学习优化库，旨在提高大模型训练的效率和速度。为了在训练中使用deepspeed，您需要先估计训练任务的显存大小，再根据任务需求与资源情况选择合适的ZeRO阶段。
+DeepSpeed是由微软开发的一个开源深度学习优化库，旨在提高大模型训练的效率和速度GPUGPU在训练中使用deepspeed，您需要先估计训练任务的显存大小，再根据任务需求与资源情况选择合适的ZeRO阶段。
 
-* ZeRO-1: 仅划分优化器参数，每个设备各有一份模型参数与梯度。
-* ZeRO-2: 划分优化器参数与梯度，每个设备各有一份模型参数。
+* ZeRO-1: 仅划分优化器参数，每个GPU各有一份完整的模型参数与梯度。
+* ZeRO-2: 划分优化器参数与梯度，每个GPU各有一份完整的模型参数。
 * ZeRO-3: 划分优化器参数、梯度与模型参数。
 
 关于 :ref:`显存估计`
@@ -575,7 +575,13 @@ fsdp
 .. _fsdp多机多卡:
 
 
-PyTorch的全切片数据并行技术（Fully Sharded Data Parallel）能让我们处理更多更大的模型。LLaMA-Factory支持使用fsdp引擎进行分布式训练。
+PyTorch的全切片数据并行技术 `fsdp <https://pytorch.org/docs/stable/fsdp.html/>` （Fully Sharded Data Parallel）能让我们处理更多更大的模型。LLaMA-Factory支持使用fsdp引擎进行分布式训练。
+
+fsdp的参数 ``ShardingStrategy`` 的不同取值决定了模型的划分方式：
+
+* ``FULL_SHARD``: 将模型参数、梯度和优化器状态都切分到不同的GPU上，类似ZeRO-3。
+* ``SHARD_GRAD_OP``: 将梯度、优化器状态切分到不同的GPU上，每个GPU仍各自保留一份完整的模型参数。类似ZeRO-2。 
+* ``NO_SHARD``: 不切分任何参数。类似ZeRO-0。
 
 
 llamafactory-cli
@@ -654,6 +660,6 @@ accelerate
 
 .. _显存估计:
 
-deepspeed不同阶段显存估计
+显存估计
 +++++++++++++++++
 TODO
