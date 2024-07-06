@@ -5,7 +5,7 @@
 
 `dataset_info.json <https://github.com/hiyouga/LLaMA-Factory/blob/main/data/dataset_info.json/>`_ 包含了所有可用的数据集。如果您希望使用自定义数据集，请 **务必** 在 ``dataset_info.json`` 文件中添加数据集描述，并通过修改 ``dataset: 数据集名称`` 配置来使用数据集。
 
-目前我们支持 :ref:`alpaca<alpaca>` 格式和  :ref:`sharegpt<Sharegpt>` 格式的数据集
+目前我们支持 :ref:`Alpaca<alpaca>` 格式和  :ref:`ShareGPT<Sharegpt>` 格式的数据集
 
 
 
@@ -238,7 +238,7 @@ KTO数据集与偏好数据集类似，但不同于给出一个更优的回答�
 
 .. _Sharegpt:
 
-Sharegpt
+ShareGPT
 ------------------------------------------
 
 针对不同任务，数据集格式要求如下：
@@ -248,8 +248,8 @@ Sharegpt
 * :ref:`OpenAI格式 <OpenAI格式>`
 
 .. note::
-  * sharegpt 格式中的 KTO数据集(`样例 <https://github.com/hiyouga/LLaMA-Factory/blob/main/data/kto_en_demo.json/>`_)和多模态数据集(`样例 <https://github.com/hiyouga/LLaMA-Factory/blob/main/data/mllm_demo.json/>`_) 与 alpaca 格式的类似。
-  * 预训练数据集不支持 sharegpt 格式。
+  * ShareGPT 格式中的 KTO数据集(`样例 <https://github.com/hiyouga/LLaMA-Factory/blob/main/data/kto_en_demo.json/>`_)和多模态数据集(`样例 <https://github.com/hiyouga/LLaMA-Factory/blob/main/data/mllm_demo.json/>`_) 与 alpaca 格式的类似。
+  * 预训练数据集不支持 ShareGPT 格式。
 
 
 

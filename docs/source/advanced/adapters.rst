@@ -3,7 +3,7 @@
 调优算法
 =============
 
-LLaMA-Factory支持多种调优算法，包括： :ref:`Full Parameter Fine-tuning <full>` 、 :ref:`Freeze <Freeze>` 、 :ref:`LoRA <LoRA>` 、 :ref:`Galore <Galore>` 、 :ref:`BAdam <BAdam>` 。
+LLaMA-Factory 支持多种调优算法，包括： :ref:`Full Parameter Fine-tuning <full>` 、 :ref:`Freeze <Freeze>` 、 :ref:`LoRA <LoRA>` 、 :ref:`Galore <Galore>` 、 :ref:`BAdam <BAdam>` 。
 
 .. list-table:: 以微调Meta-Llama-3-8B-Instruct模型为例
     :widths: 20 30 30
@@ -64,9 +64,7 @@ Freeze(冻结微调)指的是在训练过程中只对模型的小部分权重进
 
 .. code-block:: yaml
 
-    ### model
-    model_name_or_path: models/llama3-8b-instruct-pro
-
+    ...
     ### method
     stage: sft
     do_train: true
@@ -74,38 +72,7 @@ Freeze(冻结微调)指的是在训练过程中只对模型的小部分权重进
     freeze_trainable_layers: 8
     freeze_trainable_modules: all
     use_llama_pro: true
-
-    ### dataset
-    dataset: identity,alpaca_en_demo
-    template: llama3
-    cutoff_len: 1024
-    max_samples: 1000
-    overwrite_cache: true
-    preprocessing_num_workers: 16
-
-    ### output
-    output_dir: saves/llama3-8b-instruct-pro/freeze/sft
-    logging_steps: 10
-    save_steps: 500
-    plot_loss: true
-    overwrite_output_dir: true
-
-    ### train
-    per_device_train_batch_size: 1
-    gradient_accumulation_steps: 8
-    learning_rate: 1.0e-4
-    num_train_epochs: 3.0
-    lr_scheduler_type: cosine
-    warmup_ratio: 0.1
-    bf16: true
-    ddp_timeout: 180000000
-
-    ### eval
-    val_size: 0.1
-    per_device_eval_batch_size: 1
-    eval_strategy: steps
-    eval_steps: 500
-
+    ...
 
 .. list-table:: FreezeArguments
    :widths: 30 10 50
@@ -124,12 +91,11 @@ Freeze(冻结微调)指的是在训练过程中只对模型的小部分权重进
      - str
      - 除了隐藏层外可以被训练的模块名称，被指定的模块将会被设置为可训练的。使用逗号分隔多个模块。默认值为 ``None``
 
-
 .. _LoRA:
 
 LoRA
 --------------------------
-如果您需要进行LoRA微调，请将 ``finetuning_type`` 设置为 ``lora`` 并且设置相关参数。
+如果您需要进行 LoRA 微调，请将 ``finetuning_type`` 设置为 ``lora`` 并且设置相关参数。
 下面是一个例子：
 
 .. code-block:: yaml
@@ -155,40 +121,40 @@ LoRA
      - 介绍
    * - additional_target[非必须]
      - [str,]
-     - 除LoRA层之外设置为可训练并保存在最终检查点中的模块名称。使用逗号分隔多个模块。默认值为 ``None``
+     - 除 LoRA 层之外设置为可训练并保存在最终检查点中的模块名称。使用逗号分隔多个模块。默认值为 ``None``
    * - lora_alpha[非必须]
      - int
      - LoRA 缩放系数。一般情况下为 lora_rank * 2, 默认值为 ``None``
    * - lora_dropout
      - float
-     - LoRA微调中的dropout率。默认值为 ``0``
+     - LoRA 微调中的 dropout 率。默认值为 ``0``
    * - lora_rank
      - int
-     - LoRA微调的本征维数 ``r``， ``r`` 越大可训练的参数越多。默认值为 ``8``
+     - LoRA 微调的本征维数 ``r``， ``r`` 越大可训练的参数越多。默认值为 ``8``
    * - lora_target
      - str
-     - 应用LoRA方法的模块名称。使用逗号分隔多个模块，使用 ``all`` 指定所有模块。默认值为 ``all``
+     - 应用 LoRA 方法的模块名称。使用逗号分隔多个模块，使用 ``all`` 指定所有模块。默认值为 ``all``
    * - loraplus_lr_ratio[非必须]
      - float
-     - LoRA+学习率比例(``r = ηA/ηB``)。 ``ηA, ηB`` 分别是 adapter matrices A 与 B 的学习率。实验表明，将这个值设置为 ``16`` 会取得较好的初始结果。当任务较为复杂时需要将这个值设置得大一些。默认值为 ``None``
+     - LoRA+ 学习率比例(``r = ηA/ηB``)。 ``ηA, ηB`` 分别是 adapter matrices A 与 B 的学习率。实验表明，将这个值设置为 ``16`` 会取得较好的初始结果。当任务较为复杂时需要将这个值设置得大一些。默认值为 ``None``
    * - loraplus_lr_embedding[非必须]
      - float
-     - LoRA+嵌入层的学习率, 默认值为 ``1e-6``
+     - LoRA+ 嵌入层的学习率, 默认值为 ``1e-6``
    * - use_rslora
      - bool
-     - 是否使用秩稳定LoRA(Rank-Stabilized LoRA)，默认值为 ``False``
+     - 是否使用秩稳定 LoRA(Rank-Stabilized LoRA)，默认值为 ``False``
    * - use_dora
      - bool
-     - 是否使用权重分解LoRA（Weight-Decomposed LoRA），默认值为 ``False``
+     - 是否使用权重分解 LoRA（Weight-Decomposed LoRA），默认值为 ``False``
    * - pissa_init
      - bool
-     - 是否初始化PiSSA适配器，默认值为 ``False``
+     - 是否初始化 PiSSA 适配器，默认值为 ``False``
    * - pissa_iter
      - int
-     - PiSSA中FSVD执行的迭代步数。使用 ``-1`` 将其禁用，默认值为 ``16``
+     - PiSSA 中 FSVD 执行的迭代步数。使用 ``-1`` 将其禁用，默认值为 ``16``
    * - pissa_convert
      - bool
-     - 是否将PiSSA适配器转换为正常的LoRA适配器，默认值为 ``False``
+     - 是否将 PiSSA 适配器转换为正常的 LoRA 适配器，默认值为 ``False``
    * - create_new_adapter
      - bool
      - 是否创建一个具有随机初始化权重的新适配器，默认值为 ``False``
@@ -206,7 +172,7 @@ Galore
 
 .. warning:: 
 
-  不要将LoRA和GaLore/BAdam 一起使用。
+  * 不要将 LoRA 和 GaLore/BAdam 一起使用。
 
 下面是一个例子：
 
@@ -266,7 +232,7 @@ BAdam
 .. warning:: 
 
 
-BAdam是一种内存高效的全参优化方法，您通过配置 ``BAdamArgument`` 中的参数可以对其进行详细设置。
+BAdam 是一种内存高效的全参优化方法，您通过配置 ``BAdamArgument`` 中的参数可以对其进行详细设置。
 下面是一个例子：
 
 .. code-block:: yaml
@@ -287,9 +253,10 @@ BAdam是一种内存高效的全参优化方法，您通过配置 ``BAdamArgumen
 
 .. warning:: 
 
-  不要将LoRA和GaLore/BAdam 一起使用。
-  使用BAdam时请设置 ``finetuning_type`` 为 ``full`` 且 ``pure_bf16`` 为 ``True`` 。
-  若设置 ``badam_mode = layer`` ,请使用DeepSpeed ZeRO3 训练
+  * 不要将 LoRA 和 GaLore/BAdam 一起使用。
+  * 使用 BAdam 时请设置 ``finetuning_type`` 为 ``full`` 且 ``pure_bf16`` 为 ``True`` 。
+  * ``badam_mode = layer`` 时仅支持使用 DeepSpeed ZeRO3 进行 **单卡** 或 **多卡** 训练。
+  * ``badam_mode = ratio`` 时仅支持 **单卡** 训练。
 
 
 .. list-table:: BAdamArgument

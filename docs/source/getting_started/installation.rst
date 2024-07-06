@@ -1,25 +1,24 @@
 
 .. _installation: 
 
-####################################
 安装
-####################################
+==============================
 
-*********************************
-Linux 系统
-*********************************
+Linux
+----------------------------------
 
 
 CUDA 安装
-#######################
-
-CUDA 是由 NVIDIA 创建的一个并行计算平台和编程模型，它让开发者可以使用NVIDIA的GPU进行高性能的并行计算。
-
-首先，在 `https://developer.nvidia.com/cuda-gpus <https://developer.nvidia.com/cuda-gpus/>`_ 查看您的GPU是否支持CUDA
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
+CUDA 是由 NVIDIA 创建的一个并行计算平台和编程模型，它让开发者可以使用 NVIDIA 的 GPU 进行高性能的并行计算。
 
-1. 保证当前Linux版本支持CUDA. 在命令行中输入 ``uname -m && cat /etc/*release``，应当看到类似的输出
+首先，在 `https://developer.nvidia.com/cuda-gpus <https://developer.nvidia.com/cuda-gpus/>`_ 查看您的 GPU 是否支持CUDA
+
+
+
+1. 保证当前 Linux 版本支持CUDA. 在命令行中输入 ``uname -m && cat /etc/*release``，应当看到类似的输出
 
 .. code-block:: bash
 
@@ -33,11 +32,11 @@ CUDA 是由 NVIDIA 创建的一个并行计算平台和编程模型，它让开�
 
     gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0
 
-3. 在以下网址下载所需的CUDA，这里推荐12.2版本。 `https://developer.nvidia.com/cuda-gpus <https://developer.nvidia.com/cuda-12-2-0-download-archive/>`_ 注意需要根据上述输出选择正确版本
+3. 在以下网址下载所需的 CUDA，这里推荐12.2版本。 `https://developer.nvidia.com/cuda-gpus <https://developer.nvidia.com/cuda-12-2-0-download-archive/>`_ 注意需要根据上述输出选择正确版本
 
   .. image:: ../assets/image-20240610221819901.png
 
-如果您之前安装过CUDA(例如为12.1版本)，需要先使用 ``sudo /usr/local/cuda-12.1/bin/cuda-uninstaller`` 卸载。如果该命令无法运行，可以直接：
+如果您之前安装过 CUDA(例如为12.1版本)，需要先使用 ``sudo /usr/local/cuda-12.1/bin/cuda-uninstaller`` 卸载。如果该命令无法运行，可以直接：
 
 .. code-block:: bash
 
@@ -59,12 +58,11 @@ CUDA 是由 NVIDIA 创建的一个并行计算平台和编程模型，它让开�
 
 .. image:: ../assets/image-20240610221942403.png
 
-**********************
 Windows
-**********************
+-----------------------
 
 CUDA 安装
-########################
+~~~~~~~~~~~~~~~~~~~~~~~
 1. 打开 **设置** ，在 **关于** 中找到 **Windows 规格** 保证系统版本在以下列表中：
 
 .. list-table::
@@ -84,7 +82,7 @@ CUDA 安装
 
 .. image:: ../assets/image-20240610222000379.png
 
-3. 打开cmd输入 ``nvcc -V`` ，若出现类似内容则安装成功。
+3. 打开 cmd 输入 ``nvcc -V`` ，若出现类似内容则安装成功。
 
 .. image:: ../assets/image-20240610222014623.png
 
@@ -92,9 +90,9 @@ CUDA 安装
 
 .. image:: ../assets/image-20240610222021868.png
 
-*****************************
-LLaMA-Factory安装
-*****************************
+
+LLaMA-Factory 安装
+-------------------------------------
 
 在安装LLaMA-Factory之前，请确保您安装了下列依赖:
 
@@ -108,10 +106,8 @@ LLaMA-Factory安装
 
 如果出现环境冲突，请尝试使用 ``pip install --no-deps -e .`` 解决
 
-*****************************
-LLaMA-Factory校验
-*****************************
-
+LLaMA-Factory 校验
+-------------------------------
 
 完成安装后，可以通过使用 ``llamafactory-cli version`` 来快速校验安装是否成功
 
@@ -119,31 +115,31 @@ LLaMA-Factory校验
 
 .. image:: ../assets/image-20240611002529453.png
 
-*****************************
-LLaMA-Factory高级选项
-*****************************
+LLaMA-Factory 高级选项
+---------------------------------
 
 Windows
-======================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-QLoRa
--------------------------------------
+QLoRA
++++++++++++++++++++++++++++++++++
 
-如果您想在Windows上启用量化LoRA（QLoRA），请根据您的CUDA版本选择适当的 `bitsandbytes <https://github.com/jllllll/bitsandbytes-windows-webui/releases/tag/wheels/>`_ 发行版本。
+如果您想在 Windows 上启用量化 LoRA（QLoRA），请根据您的 CUDA 版本选择适当的 `bitsandbytes <https://github.com/jllllll/bitsandbytes-windows-webui/releases/tag/wheels/>`_ 发行版本。
 
 .. code-block:: bash
 
     pip install https://github.com/jllllll/bitsandbytes-windows-webui/releases/download/wheels/bitsandbytes-0.41.2.post2-py3-none-win_amd64.whl
 
-flash-attn
------------------------------------
+FlashAttention-2
+++++++++++++++++++++++++++++++
 
-如果您要在Windows平台上启用FlashAttention-2，请根据您的CUDA版本选择适当的 `flash-attention <https://github.com/bdashore3/flash-attention/releases/>`_ 发行版本。
+如果您要在 Windows 平台上启用 FlashAttention-2，请根据您的 CUDA 版本选择适当的 `flash-attention <https://github.com/bdashore3/flash-attention/releases/>`_ 发行版本。
 
 
 Extra Dependency
-************************************
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
 如果您有更多需求，请安装对应依赖。
 
 .. list-table::

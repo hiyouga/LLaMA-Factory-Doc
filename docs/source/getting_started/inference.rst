@@ -1,12 +1,12 @@
 推理
 ==========================
 
-您可以在 ``myconfig.yaml`` 中配置好模型名称、模板等参数后使用以下命令进行推理。
 
+以下指令提供了使用 ``llamafactory-cli`` 进行推理的示例。您需要根据自身需求自行配置。
 
 .. code-block:: bash
 
-    llamafactory-cli train myconfig.yaml
+    llamafactory-cli chat inference_config.yaml
 
 原始模型推理配置
 ----------------------------
@@ -31,6 +31,26 @@
     finetuning_type: lora
 
 
+多模态模型
+----------------------
+
+对于多模态模型，您可以运行以下指令进行推理。
+
+.. code-block:: bash
+
+    llamafactory-cli webchat llava.yaml
+
+``llava.yaml`` 的配置如下：
+
+.. code-block:: yaml
+
+    model_name_or_path: llava-hf/llava-1.5-7b-hf
+    template: vicuna
+    visual_inputs: true
+
+
+
+
 vllm推理框架
 ------------------------
 若使用vllm推理框架，请在配置中指定： ``infer_backend`` 与 ``vllm_enforce_eager``。
@@ -46,3 +66,17 @@ vllm推理框架
 
 
 
+推理
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+``examples/inference/llama3_lora_sft.yaml`` 提供了推理时的配置示例。
+
+.. code-block:: yaml
+
+    ### examples/inference/llama3_lora_sft.yaml
+    model_name_or_path: meta-llama/Meta-Llama-3-8B-Instruct
+    adapter_name_or_path: saves/llama3-8b/lora/sft
+    template: llama3
+    finetuning_type: lora
+
+.. note::
+    模型 ``model_name_or_path`` 需要存在且与 ``template`` 相对应。

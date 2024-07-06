@@ -1,14 +1,14 @@
-webui
+WebUI
 ========================
 
-LLaMA-Factory支持通过webui零代码微调大语言模型。
-在完成 :ref:`安装 <installation>` 后，您可以通过以下指令进入webui:
+LLaMA-Factory 支持通过 WebUI 零代码微调大语言模型。
+在完成 :ref:`安装 <installation>` 后，您可以通过以下指令进入 WebUI:
 
 .. code-block:: bash
 
     llamafactory-cli webui
 
-webui主要分为四个界面：训练、评估与预测、对话、导出。
+WebUI 主要分为四个界面：训练、评估与预测、对话、导出。
 
 
 训练
