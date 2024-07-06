@@ -18,7 +18,7 @@ LLaMA Factory 是一个简单易用且高效的大型语言模型（Large Langua
 * 实验面板：LlamaBoard、TensorBoard、Wandb、MLflow 等等。
 
 Documentation
--------------
+------------------
 
 .. toctree::
   :maxdepth: 1
@@ -26,6 +26,7 @@ Documentation
 
   getting_started/installation
   getting_started/data_preparation
+  getting_started/webui
   getting_started/sft
   getting_started/merge_lora
   getting_started/inference
