@@ -26,18 +26,9 @@ PTQ
 
 GPTQ
 ~~~~~~~~~~~~~~
-GPTQ(Group-wise Precision Tuning Quantization)是一种静态的后训练量化技术。"静态"指的是预训练模型一旦确定,量化参数不再更改。GPTQ量化技术将 fp16 精度的模型量化为 4-bit,在节省了约75%的显存的同时大幅提高了推理速度。
+GPTQ(Group-wise Precision Tuning Quantization)是一种静态的后训练量化技术。"静态"指的是预训练模型一旦确定,经过量化后量化参数不再更改。GPTQ量化技术将 fp16 精度的模型量化为 4-bit,在节省了约75%的显存的同时大幅提高了推理速度。
 为了使用GPTQ量化模型，您需要指定量化模型名称或路径，例如 ``model_name_or_path: TechxGenus/Meta-Llama-3-8B-Instruct-GPTQ``
 
-
-
-.. code-block:: yaml
-
-    ### examples/merge_lora/llama3_bitsandbytes.yaml
-    ### model
-    model_name_or_path: meta-llama/Meta-Llama-3-8B-Instruct
-    quantization_bit: 4
-    quantization_method: bitsandbytes  # choices: [bitsandbytes (4/8), hqq (2/3/4/5/6/8), eetq (8)]
 
 QAT
 -------------------
