@@ -71,7 +71,6 @@ Freeze(冻结微调)指的是在训练过程中只对模型的小部分权重进
     finetuning_type: freeze
     freeze_trainable_layers: 8
     freeze_trainable_modules: all
-    use_llama_pro: true
     ...
 
 .. list-table:: FreezeArguments
