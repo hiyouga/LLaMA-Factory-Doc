@@ -27,12 +27,17 @@ PTQ
 GPTQ
 ~~~~~~~~~~~~~~
 GPTQ(Group-wise Precision Tuning Quantization)是一种静态的后训练量化技术。"静态"指的是预训练模型一旦确定,量化参数不再更改。GPTQ量化技术将 fp16 精度的模型量化为 4-bit,在节省了约75%的显存的同时大幅提高了推理速度。
-为了使用GPTQ量化模型，您需要指定量化模型名称或路径，例如 ``TechxGenus/Meta-Llama-3-8B-Instruct-GPTQ``
+为了使用GPTQ量化模型，您需要指定量化模型名称或路径，例如 ``model_name_or_path: TechxGenus/Meta-Llama-3-8B-Instruct-GPTQ``
 
-bitsandbytes
-~~~~~~~~~~~~~~~
-区别于GPTQ, bitsandbytes是一种动态的后训练量化技术。bitsandbytes使得大于1B的语言模型也能在8-bit量化后不过多地损失性能。
-经过bitsandbytes 8-bit量化的模型能够在保持性能的情况下节省约50%的显存。
+
+
+.. code-block:: yaml
+
+    ### examples/merge_lora/llama3_bitsandbytes.yaml
+    ### model
+    model_name_or_path: meta-llama/Meta-Llama-3-8B-Instruct
+    quantization_bit: 4
+    quantization_method: bitsandbytes  # choices: [bitsandbytes (4/8), hqq (2/3/4/5/6/8), eetq (8)]
 
 QAT
 -------------------
@@ -44,9 +49,33 @@ AWQ
 ~~~~~~~~~~~~~~~~~~~~
 AWQ（Activation-Aware Layer Quantization）是一种静态的后训练量化技术。其思想基于：有很小一部分的权重十分重要，为了保持性能这些权重不会被量化。
 AWQ的优势在于其需要的校准数据集更小，且在指令微调和多模态模型上表现良好。
+为了使用AWQ量化模型,您需要指定量化模型名称或路径，例如 ``model_name_or_path: TechxGenus/Meta-Llama-3-8B-Instruct-AWQ``
+
+
+AQLM
+------------------
+AQLM（Additive Quantization of Language Models）作为一种只对模型权重进行量化的PTQ方法，在2-bit量化下达到了当时的最佳表现，并且在3-bit和4-bit量化下也展示了性能的提升。
+尽管AQLM在模型推理速度方面的提升并不是最显著的，但其在2-bit量化下的优异表现意味着您可以以极低的显存占用来部署大模型。
+
+
 
 OFTQ
 ---------------------
+OFTQ(On-the-fly Quantization)指的是模型无需校准数据集，直接在推理阶段进行量化。OFTQ是一种动态的后训练量化技术. OFTQ在保持性能的同时。
+因此，在使用OFTQ量化方法时，您需要指定预训练模型、指定量化方法 ``quantization_method`` 和指定量化位数 ``quantization_bit``
+下面提供了一个使用bitsandbytes量化方法的配置示例：
+
+.. code-block:: yaml
+
+    model_name_or_path: meta-llama/Meta-Llama-3-8B-Instruct
+    quantization_bit: 4
+    quantization_method: bitsandbytes  # choices: [bitsandbytes (4/8), hqq (2/3/4/5/6/8), eetq (8)]
+
+
+bitsandbytes
+~~~~~~~~~~~~~~~
+区别于GPTQ, bitsandbytes是一种动态的后训练量化技术。bitsandbytes使得大于1B的语言模型也能在8-bit量化后不过多地损失性能。
+经过bitsandbytes 8-bit量化的模型能够在保持性能的情况下节省约50%的显存。
 
 HQQ
 ~~~~~~~~~~~~~
@@ -56,6 +85,5 @@ HQQ
 EETQ
 ~~~~~~~~~~~~~~
 EETQ(Easy and Efficient Quantization for Transformers)是一种只对模型权重进行量化的PTQ方法。具有较快的速度和简单易用的特性。
-
 
 
