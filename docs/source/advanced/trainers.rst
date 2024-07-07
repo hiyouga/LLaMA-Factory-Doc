@@ -145,3 +145,23 @@ DPO
     pref_loss: sigmoid  # choices: [sigmoid (dpo), orpo, simpo]
     dataset: dpo_en_demo
     ...
+
+
+KTO
+~~~~~~~~~~~~~~~~~~~~~~
+
+KTO(Kahneman-Taversky Optimization) 的出现是为了解决成对的偏好数据难以获得的问题。 KTO使用了一种新的损失函数使其只需二元的标记数据，
+即只需标注回答的好坏即可训练，并取得与 DPO 相似甚至更好的效果。
+
+在使用 KTO 时，请将 ``stage`` 设置为 ``kto`` ，设置偏好优化相关参数并使用 KTO 数据集。
+
+以下是一个示例：
+
+.. code-block:: yaml
+
+    model_name_or_path: meta-llama/Meta-Llama-3-8B-Instruct
+    ...
+    stage: kto
+    pref_beta: 0.1
+    ...
+    dataset: kto_en_demo

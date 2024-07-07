@@ -41,5 +41,6 @@ Documentation
   advanced/distributed
   advanced/quantization
   advanced/trainers
+  advanced/extras
 
 
