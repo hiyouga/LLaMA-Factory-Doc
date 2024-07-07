@@ -135,7 +135,7 @@ LoRA
      - 应用 LoRA 方法的模块名称。使用逗号分隔多个模块，使用 ``all`` 指定所有模块。默认值为 ``all``
    * - loraplus_lr_ratio[非必须]
      - float
-     - LoRA+ 学习率比例(``r = ηA/ηB``)。 ``ηA, ηB`` 分别是 adapter matrices A 与 B 的学习率。实验表明，将这个值设置为 ``16`` 会取得较好的初始结果。当任务较为复杂时需要将这个值设置得大一些。默认值为 ``None``
+     - LoRA+ 学习率比例(``λ = ηB/ηA``)。 ``ηA, ηB`` 分别是 adapter matrices A 与 B 的学习率。实验表明，将这个值设置为 ``16`` 会取得较好的初始结果。当任务较为复杂时需要将这个值设置得大一些。默认值为 ``None``
    * - loraplus_lr_embedding[非必须]
      - float
      - LoRA+ 嵌入层的学习率, 默认值为 ``1e-6``
@@ -158,8 +158,36 @@ LoRA
      - bool
      - 是否创建一个具有随机初始化权重的新适配器，默认值为 ``False``
 
+LoRA+
+~~~~~~~~~~~~~~~~~~~~
+在LoRA中，适配器矩阵 A 和 B 的学习率相同。您可以通过设置 ``loraplus_lr_ratio`` 来调整学习率比例。在 LoRA+ 中，适配器矩阵 A 的学习率 ``ηA`` 即为优化器学习率。适配器矩阵 B 的学习率 ``ηB`` 为 ``λ * ηA``。
+其中 ``λ`` 为 ``loraplus_lr_ratio`` 的值，一般取16。
 
 
+
+rsLoRA
+~~~~~~~~~~~~~~~~~~~~~~
+
+LoRA通过添加低秩适配器进行微调，然而当增大 ``lora_rank`` 时，其训练速度会减慢。rsLoRA(Rank-Stabilized LoRA)通过修改缩放因子使得模型训练更加稳定。
+使用rsLoRA时， ``lora_rank``的大小对训练速度没有影响。 注意，使用rsLoRA时， 您只需要将 ``use_rslora`` 设置为 ``True`` ，而无需修改 ``lora_rank``, ``lora_alpha`` 等参数。
+
+
+DoRA
+~~~~~~~~~~~~~~~~~~~
+
+DoRA （Weight-Decomposed Low-Rank Adaptation）提出尽管 LoRA 大幅降低了推理成本，但这种方式取得的性能与全量微调之间仍有差距。
+
+DoRA将权重矩阵分解为大小与单位方向矩阵的乘积，并进一步微调二者（对方向矩阵则进一步使用 LoRA 分解），从而实现 LoRA 与 Full Fine-tuning 之间的平衡。
+
+如果您需要使用 DoRA，请将 ``use_dora`` 设置为 ``True`` 。
+
+PiSSA
+~~~~~~~~~~~~~~~~~~
+
+在 LoRA 中，适配器矩阵 A 由 kaiming_uniform 初始化，而适配器矩阵 B 则全初始化为0。这导致一开始的输入并不会改变模型输出并且使得梯度较小，收敛较慢。
+PiSSA 通过奇异值分解直接分解原权重矩阵，其的优势在于它可以更快更好地收敛。
+
+如果您需要使用 PiSSA，请将 ``pissa_init`` 设置为 ``True`` 。
 
 
 .. _Galore:

@@ -30,6 +30,7 @@ Documentation
   getting_started/sft
   getting_started/merge_lora
   getting_started/inference
+  getting_started/eval
 
 .. toctree::
   :maxdepth: 2
