@@ -9,8 +9,8 @@ LLaMA-Factory 支持单机多卡和多机多卡分布式训练。同时也支持
 `DeepSpeed <https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/>`_ 是微软开发的分布式训练引擎，并提供ZeRO（Zero Redundancy Optimizer）、offload、Sparse Attention、1 bit Adam、流水线并行等优化技术。
 您可以根据任务需求与设备选择使用。
 
-`FSDP <https://pytorch.org/tutorials/intermediate/FSDP_tutorial.html>`_ 通过全切片数据并行技术（Fully Sharded Data Parallel）来处理更多更大的模型。在DDP中，每张GPU都各自保留了一份完整的模型参数和优化器参数。而fsdp切分了模型参数、梯度与优化器参数，使得每张GPU只保留这些参数的一部分。
-除了并行技术之外，fsdp还支持将模型参数卸载至CPU，从而进一步降低显存需求。
+`FSDP <https://pytorch.org/tutorials/intermediate/FSDP_tutorial.html>`_ 通过全切片数据并行技术（Fully Sharded Data Parallel）来处理更多更大的模型。在DDP中，每张GPU都各自保留了一份完整的模型参数和优化器参数。而 FSDP 切分了模型参数、梯度与优化器参数，使得每张 GPU 只保留这些参数的一部分。
+除了并行技术之外，FSDP 还支持将模型参数卸载至CPU，从而进一步降低显存需求。
 
 
 .. list-table::
@@ -62,7 +62,7 @@ LLaMA-Factory 支持单机多卡和多机多卡分布式训练。同时也支持
 NativeDDP
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-NativeDDP是PyTorch提供的一种分布式训练方式，您可以通过以下命令启动训练：
+NativeDDP是 PyTorch 提供的一种分布式训练方式，您可以通过以下命令启动训练：
 
 .. _torchrun:
 
@@ -244,7 +244,7 @@ accelerate
 
 DeepSpeed
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-DeepSpeed是由微软开发的一个开源深度学习优化库，旨在提高大模型训练的效率和速度。在使用DeepSpeed之前，您需要先估计训练任务的显存大小，再根据任务需求与资源情况选择合适的ZeRO阶段。
+DeepSpeed 是由微软开发的一个开源深度学习优化库，旨在提高大模型训练的效率和速度。在使用 DeepSpeed 之前，您需要先估计训练任务的显存大小，再根据任务需求与资源情况选择合适的 ZeRO 阶段。
 
 * ZeRO-1: 仅划分优化器参数，每个GPU各有一份完整的模型参数与梯度。
 * ZeRO-2: 划分优化器参数与梯度，每个GPU各有一份完整的模型参数。
@@ -252,8 +252,8 @@ DeepSpeed是由微软开发的一个开源深度学习优化库，旨在提高�
 
 .. 关于 :ref:`显存估计`
 
-简单来说：从ZeRO-1到ZeRO-3，阶段数越高，显存需求越小，但是训练速度也依次变慢。此外，设置 ``offload_param=cpu`` 参数会大幅减小显存需求，但会极大地使训练速度减慢。因此，如果您有足够的显存，
-应当使用ZeRO-1，并且确保 ``offload_param=none``。
+简单来说：从 ZeRO-1 到 ZeRO-3，阶段数越高，显存需求越小，但是训练速度也依次变慢。此外，设置 ``offload_param=cpu`` 参数会大幅减小显存需求，但会极大地使训练速度减慢。因此，如果您有足够的显存，
+应当使用 ZeRO-1，并且确保 ``offload_param=none``。
 
 LLaMA-Factory提供了使用不同阶段的 DeepSpeed 配置文件的示例。包括：
 
@@ -468,7 +468,7 @@ ZeRO-0
 ZeRO-2
 **************************
 
-只需在ZeRO-0的基础上添加 ``zero_optimization`` 中的 ``stage`` 参数即可。
+只需在 ZeRO-0 的基础上添加 ``zero_optimization`` 中的 ``stage`` 参数即可。
 
 .. code-block:: yaml
 
@@ -490,7 +490,7 @@ ZeRO-2+offload
 *************************
 
 
-只需在ZeRO-0的基础上在 ``zero_optimization`` 中添加 ``offload_optimizer`` 参数即可。
+只需在 ZeRO-0 的基础上在 ``zero_optimization`` 中添加 ``offload_optimizer`` 参数即可。
 
 
 .. code-block:: yaml
@@ -515,7 +515,7 @@ ZeRO-2+offload
 ZeRO-3
 ****************************
 
-只需在ZeRO-0的基础上修改 ``zero_optimization`` 中的参数。
+只需在 ZeRO-0 的基础上修改 ``zero_optimization`` 中的参数。
 
 .. code-block:: yaml
 
@@ -542,7 +542,7 @@ ZeRO-3
 ZeRO-3+offload
 *****************************
 
-只需在ZeRO-3的基础上添加 ``zero_optimization`` 中的 ``offload_optimizer`` 和 ``offload_param`` 参数即可。
+只需在 ZeRO-3 的基础上添加 ``zero_optimization`` 中的 ``offload_optimizer`` 和 ``offload_param`` 参数即可。
 
 .. code-block:: yaml
 
@@ -583,7 +583,7 @@ FSDP
 .. _fsdp多机多卡:
 
 
-PyTorch的全切片数据并行技术 `fsdp <https://pytorch.org/docs/stable/fsdp.html>`_ （Fully Sharded Data Parallel）能让我们处理更多更大的模型。LLaMA-Factory支持使用fsdp引擎进行分布式训练。
+PyTorch 的全切片数据并行技术 `fsdp <https://pytorch.org/docs/stable/fsdp.html>`_ （Fully Sharded Data Parallel）能让我们处理更多更大的模型。LLaMA-Factory支持使用 FSDP 引擎进行分布式训练。
 
 FSDP 的参数 ``ShardingStrategy`` 的不同取值决定了模型的划分方式：
 
@@ -595,7 +595,7 @@ FSDP 的参数 ``ShardingStrategy`` 的不同取值决定了模型的划分方�
 llamafactory-cli
 +++++++++++++++++++++++++
 
-您只需根据需要修改 ``examples/accelerate/fsdp_config.yaml`` 以及 ``examples/extras/fsdp_qlora/llama3_lora_sft.yaml`` ，文件然后运行以下命令即可启动fsdp+QLoRA微调：
+您只需根据需要修改 ``examples/accelerate/fsdp_config.yaml`` 以及 ``examples/extras/fsdp_qlora/llama3_lora_sft.yaml`` ，文件然后运行以下命令即可启动 FSDP+QLoRA 微调：
 
 .. code-block:: bash
 
@@ -608,7 +608,7 @@ accelerate
 
 
 
-此外，您也可以使用accelerate启动fsdp引擎， **节点数与GPU数可以通过 num_machines 和  num_processes 指定**。对此，Huggingface提供了便捷的配置功能。
+此外，您也可以使用 accelerate 启动 FSDP 引擎， **节点数与GPU数可以通过 num_machines 和  num_processes 指定**。对此，Huggingface 提供了便捷的配置功能。
 只需运行：
 
 .. code-block:: bash
@@ -616,7 +616,7 @@ accelerate
     accelerate config
 
 
-根据提示回答一系列问题后，我们就可以生成fsdp所需的配置文件。
+根据提示回答一系列问题后，我们就可以生成 FSDP 所需的配置文件。
 
 当然您也可以根据需求自行配置 ``fsdp_config.yaml`` 。
 
