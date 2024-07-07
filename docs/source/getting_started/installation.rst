@@ -50,7 +50,7 @@ CUDA 是由 NVIDIA 创建的一个并行计算平台和编程模型，它让开�
     wget https://developer.download.nvidia.com/compute/cuda/12.2.0/local_installers/cuda_12.2.0_535.54.03_linux.run
     sudo sh cuda_12.2.0_535.54.03_linux.run
 
-**注意**:在确定CUDA自带驱动版本与GPU是否兼容之前,建议取消Driver的安装。
+**注意**:在确定 CUDA 自带驱动版本与 GPU 是否兼容之前,建议取消 Driver 的安装。
 
 .. image:: ../assets/image-20240610221924687.png	
 
@@ -86,7 +86,7 @@ CUDA 安装
 
 .. image:: ../assets/image-20240610222014623.png
 
-否则，检查系统环境变量，保证CUDA被正确导入。			
+否则，检查系统环境变量，保证 CUDA 被正确导入。			
 
 .. image:: ../assets/image-20240610222021868.png
 
@@ -94,9 +94,9 @@ CUDA 安装
 LLaMA-Factory 安装
 -------------------------------------
 
-在安装LLaMA-Factory之前，请确保您安装了下列依赖:
+在安装 LLaMA-Factory 之前，请确保您安装了下列依赖:
 
-运行以下指令以安装LLaMA-Factory及其依赖:
+运行以下指令以安装 LLaMA-Factory 及其依赖:
 
 .. code-block:: bash
 
