@@ -282,6 +282,14 @@ llamafactory-cli
 
     FORCE_TORCHRUN=1 llamafactory-cli train examples/train_full/llama3_full_sft_ds3.yaml
 
+为了启动 DeepSpeed 引擎，配置文件中 ``deepspeed`` 参数指定了 DeepSpeed 配置文件的路径:
+
+.. code-block:: yaml 
+
+    ...
+    deepspeed: examples/deepspeed/ds_z3_config.json
+    ...
+
 
 deepspeed
 **************************

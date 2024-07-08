@@ -31,3 +31,38 @@
 
 
 在 :ref:`批量推理` 的过程中，模型的 BLEU 和 ROUGE 分数会被自动计算并保存，您也可以通过此方法评估模型。
+
+
+下面是相关参数的介绍:
+
+.. list-table:: 评估相关参数
+   :widths: 10 10 40
+   :header-rows: 1
+
+   * - 参数名称
+     - 类型
+     - 介绍
+   * - task
+     - str
+     - 评估任务的名称。
+   * - task_dir
+     - str
+     - 包含评估数据集的文件夹路径，默认值为 ``evaluation``。
+   * - batch_size
+     - int
+     - 每个GPU使用的批量大小，默认值为 ``4``。
+   * - seed
+     - int
+     - 用于数据加载器的随机种子，默认值为 ``42``。
+   * - lang
+     - str
+     - 评估使用的语言，可选值为 ``en``、 ``zh``。默认值为 ``en``。
+   * - n_shot
+     - int
+     - few-shot 的示例数量，默认值为 ``5``。
+   * - save_dir
+     - str
+     - 保存评估结果的路径，默认值为 ``None``。 如果该路径已经存在则会抛出错误。
+   * - download_mode
+     - str
+     - 评估数据集的下载模式，默认值为 ``DownloadMode.REUSE_DATASET_IF_EXISTS``。如果数据集已经存在则重复使用，否则则下载。
