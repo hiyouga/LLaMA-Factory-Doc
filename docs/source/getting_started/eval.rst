@@ -35,7 +35,7 @@
 
 下面是相关参数的介绍:
 
-.. list-table:: 评估相关参数
+.. list-table:: EvalArguments
    :widths: 10 10 40
    :header-rows: 1
 

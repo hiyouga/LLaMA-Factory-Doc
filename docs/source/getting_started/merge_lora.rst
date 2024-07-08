@@ -1,8 +1,7 @@
 LoRA 合并
 #################
 当我们基于预训练模型训练好 LoRA 适配器后，我们不希望在每次推理的时候分别加载预训练模型和 LoRA 适配器，因此我们需要将预训练模型和 LoRA 适配器合并导出。
-
-
+您可以通过 ``llamafactory-cli export merge_config.yaml`` 指令来合并模型。其中 ``merge_config.yaml`` 需要您根据不同情况进行配置。
 
 
 量化（Quantization）通过数据精度压缩有效地减少了显存使用并加速推理。LLaMA-Factory 支持多种量化方法，包括:
@@ -27,6 +26,8 @@ GPTQ等后训练量化方法(Post Training Quantization)是一种在训练后对
     * ``export_device``: 导出设备
     * ``export_legacy_format``: 是否使用旧格式导出
 
+下面提供一个配置文件示例：
+
 .. code-block:: yaml
 
     ### examples/merge_lora/llama3_gptq.yaml
@@ -48,6 +49,7 @@ QLoRA是一种在 4-bits 量化模型基础上使用 LoRA 方法进行训练的�
 .. warning:: 
     不要使用量化模型或设置量化位数 ``quantization_bit``
 
+下面提供一个配置文件示例：
 
 .. code-block:: yaml
 

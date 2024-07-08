@@ -168,8 +168,8 @@ LoRA+
 rsLoRA
 ~~~~~~~~~~~~~~~~~~~~~~
 
-LoRA通过添加低秩适配器进行微调，然而当增大 ``lora_rank`` 时，其训练速度会减慢。rsLoRA(Rank-Stabilized LoRA)通过修改缩放因子使得模型训练更加稳定。
-使用rsLoRA时， ``lora_rank``的大小对训练速度没有影响。 注意，使用rsLoRA时， 您只需要将 ``use_rslora`` 设置为 ``True`` ，而无需修改 ``lora_rank``, ``lora_alpha`` 等参数。
+LoRA 通过添加低秩适配器进行微调，然而当增大 ``lora_rank`` 时，其训练速度会减慢。rsLoRA(Rank-Stabilized LoRA) 通过修改缩放因子使得模型训练更加稳定。
+使用 rsLoRA 时， ``lora_rank`` 的大小对训练速度没有影响。 注意，使用rsLoRA时， 您只需要将 ``use_rslora`` 设置为 ``True`` ，而无需修改 ``lora_rank``, ``lora_alpha`` 等参数。
 
 
 DoRA

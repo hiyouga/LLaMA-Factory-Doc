@@ -94,6 +94,8 @@ SFT 训练
     - 梯度积累步数
   * - learning_rate
     - 学习率
+  * - lr_scheduler_type
+    - 学习率曲线，可选 ``linear``, ``cosine``, ``polynomial``, ``constant`` 等。
   * - num_train_epochs
     - 训练周期数
   * - bf16
