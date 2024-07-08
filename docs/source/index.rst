@@ -41,6 +41,6 @@ Documentation
   advanced/distributed
   advanced/quantization
   advanced/trainers
+  advanced/npu
   advanced/extras
-
 
