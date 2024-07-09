@@ -26,7 +26,7 @@ PTQ
 
 GPTQ
 ~~~~~~~~~~~~~~
-GPTQ(Group-wise Precision Tuning Quantization)是一种静态的后训练量化技术。"静态"指的是预训练模型一旦确定,经过量化后量化参数不再更改。GPTQ量化技术将 fp16 精度的模型量化为 4-bit ,在节省了约75%的显存的同时大幅提高了推理速度。
+GPTQ(Group-wise Precision Tuning Quantization)是一种静态的后训练量化技术。"静态"指的是预训练模型一旦确定,经过量化后量化参数不再更改。GPTQ 量化技术将 fp16 精度的模型量化为 4-bit ,在节省了约 75% 的显存的同时大幅提高了推理速度。
 为了使用GPTQ量化模型，您需要指定量化模型名称或路径，例如 ``model_name_or_path: TechxGenus/Meta-Llama-3-8B-Instruct-GPTQ``
 
 
@@ -39,14 +39,14 @@ QAT
 AWQ
 ~~~~~~~~~~~~~~~~~~~~
 AWQ（Activation-Aware Layer Quantization）是一种静态的后训练量化技术。其思想基于：有很小一部分的权重十分重要，为了保持性能这些权重不会被量化。
-AWQ的优势在于其需要的校准数据集更小，且在指令微调和多模态模型上表现良好。
-为了使用AWQ量化模型,您需要指定量化模型名称或路径，例如 ``model_name_or_path: TechxGenus/Meta-Llama-3-8B-Instruct-AWQ``
+AWQ 的优势在于其需要的校准数据集更小，且在指令微调和多模态模型上表现良好。
+为了使用 AWQ 量化模型,您需要指定量化模型名称或路径，例如 ``model_name_or_path: TechxGenus/Meta-Llama-3-8B-Instruct-AWQ``
 
 
 AQLM
 ------------------
-AQLM（Additive Quantization of Language Models）作为一种只对模型权重进行量化的PTQ方法，在2-bit量化下达到了当时的最佳表现，并且在3-bit和4-bit量化下也展示了性能的提升。
-尽管AQLM在模型推理速度方面的提升并不是最显著的，但其在2-bit量化下的优异表现意味着您可以以极低的显存占用来部署大模型。
+AQLM（Additive Quantization of Language Models）作为一种只对模型权重进行量化的PTQ方法，在 2-bit 量化下达到了当时的最佳表现，并且在 3-bit 和 4-bit 量化下也展示了性能的提升。
+尽管 AQLM 在模型推理速度方面的提升并不是最显著的，但其在 2-bit 量化下的优异表现意味着您可以以极低的显存占用来部署大模型。
 
 
 
@@ -65,8 +65,8 @@ OFTQ(On-the-fly Quantization)指的是模型无需校准数据集，直接在推
 
 bitsandbytes
 ~~~~~~~~~~~~~~~
-区别于GPTQ, bitsandbytes是一种动态的后训练量化技术。bitsandbytes使得大于1B的语言模型也能在8-bit量化后不过多地损失性能。
-经过bitsandbytes 8-bit量化的模型能够在保持性能的情况下节省约50%的显存。
+区别于 GPTQ, bitsandbytes 是一种动态的后训练量化技术。bitsandbytes 使得大于 1B 的语言模型也能在 8-bit 量化后不过多地损失性能。
+经过bitsandbytes 8-bit 量化的模型能够在保持性能的情况下节省约50%的显存。
 
 HQQ
 ~~~~~~~~~~~~~

@@ -5,7 +5,7 @@ LLaMA-Factory 支持多种推理方式。
 
 您可以使用 ``llamafactory-cli chat`` 或 ``llamafactory-cli webchat`` 进行推理与模型对话。对话时配置文件只需指定原始模型 ``model_name_or_path`` 和 ``template`` ，并根据是否是微调模型指定 ``adapter_name_or_path`` 和 ``finetuning_type``。
 
-如果您希望向模型大量数据集并记录推理输出，您可以使用 ``llamafactory-cli train`` 使用数据集或 ``llamafaactory-cli api`` 使用 api 进行批量推理。
+如果您希望向模型输入大量数据集并记录推理输出，您可以使用 ``llamafactory-cli train`` 使用数据集或 ``llamafaactory-cli api`` 使用 api 进行批量推理。
 
 .. note::
     使用任何方式推理时，模型 ``model_name_or_path`` 需要存在且与 ``template`` 相对应。
@@ -74,8 +74,8 @@ vllm推理框架
 
 数据集
 ~~~~~~~~~~~~~~~~~~~~~~~
-使用数据集批量推理您需要指定模型、适配器（可选）、输入数据集、输出路径等信息并且指定 ``do_predict`` 为 ``true``。
-下面提供一个示例,您可以通过 ``llamafactory-cli train examples/train_lora/llama3_lora_predict.yaml`` 进行批量推理。
+使用数据集批量推理时，您需要指定模型、适配器（可选）、输入数据集、输出路径等信息并且指定 ``do_predict`` 为 ``true``。
+下面提供一个示例,您可以通过 ``llamafactory-cli train examples/train_lora/llama3_lora_predict.yaml`` 使用数据集进行批量推理。
 
 .. code-block:: yaml
 

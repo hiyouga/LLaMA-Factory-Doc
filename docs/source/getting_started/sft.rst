@@ -57,7 +57,7 @@ SFT 训练
 
 
 .. note:: 
-    模型model_name_or_path、数据集dateset需要存在且与template相对应。
+    模型 ``model_name_or_path`` 、数据集 ``dateset`` 需要存在且与 ``template`` 相对应。
 
 
 .. list-table:: 重要训练参数

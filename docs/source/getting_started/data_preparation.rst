@@ -7,7 +7,7 @@
 
 目前我们支持 :ref:`Alpaca<alpaca>` 格式和  :ref:`ShareGPT<Sharegpt>` 格式的数据集
 
-
+对于 Alpaca 格式, 请指定 ``formatting`` 为 ``alpaca``，对于 ShareGPT 格式，请指定 ``formatting`` 为 ``sharegpt``。
 
 .. _alpaca: 
 
@@ -248,7 +248,7 @@ ShareGPT
 * :ref:`OpenAI格式 <OpenAI格式>`
 
 .. note::
-  * ShareGPT 格式中的 KTO数据集(`样例 <https://github.com/hiyouga/LLaMA-Factory/blob/main/data/kto_en_demo.json/>`_)和多模态数据集(`样例 <https://github.com/hiyouga/LLaMA-Factory/blob/main/data/mllm_demo.json/>`_) 与 alpaca 格式的类似。
+  * ShareGPT 格式中的 KTO数据集(`样例 <https://github.com/hiyouga/LLaMA-Factory/blob/main/data/kto_en_demo.json/>`_)和多模态数据集(`样例 <https://github.com/hiyouga/LLaMA-Factory/blob/main/data/mllm_demo.json/>`_) 与 Alpaca 格式的类似。
   * 预训练数据集不支持 ShareGPT 格式。
 
 
