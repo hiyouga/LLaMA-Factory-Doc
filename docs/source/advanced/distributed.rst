@@ -93,11 +93,28 @@ llamafactory-cli
 
 torchrun
 *******************************
-您也可以使用 ``torchrun`` 指令启动 NativeDDP 引擎进行单机多卡训练。
+您也可以使用 ``torchrun`` 指令启动 NativeDDP 引擎进行单机多卡训练。下面提供一个示例：
 
 .. code-block:: bash
 
-    torchrun  --standalone --nnodes=1 --nproc-per-node=8 train.py 
+    torchrun  --standalone --nnodes=1 --nproc-per-node=8  src/train.py \
+    --stage sft \
+    --model_name_or_path meta-llama/Meta-Llama-3-8B-Instruct  \
+    --do_train \
+    --dataset alpaca_en_demo \
+    --template llama3 \
+    --finetuning_type lora \
+    --output_dir  saves/llama3-8b/lora/ \
+    --overwrite_cache \
+    --per_device_train_batch_size 1 \
+    --gradient_accumulation_steps 8 \
+    --lr_scheduler_type cosine \
+    --logging_steps 100 \
+    --save_steps 500 \
+    --learning_rate 1e-4 \
+    --num_train_epochs 2.0 \
+    --plot_loss \
+    --bf16
 
 
 
@@ -144,7 +161,7 @@ accelerate
 
     accelerate launch \
     --config_file accelerate_singleNode_config.yaml \
-    train.py llm_config.yaml
+    src/train.py training_config.yaml
 
 .. _torchrun多机多卡:
 
