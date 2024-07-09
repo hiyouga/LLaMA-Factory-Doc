@@ -476,7 +476,7 @@ ZeRO-0
 ZeRO-2
 **************************
 
-只需在 ZeRO-0 的基础上添加 ``zero_optimization`` 中的 ``stage`` 参数即可。
+只需在 ZeRO-0 的基础上修改 ``zero_optimization`` 中的 ``stage`` 参数即可。
 
 .. code-block:: yaml
 
@@ -591,7 +591,7 @@ FSDP
 .. _fsdp多机多卡:
 
 
-PyTorch 的全切片数据并行技术 `fsdp <https://pytorch.org/docs/stable/fsdp.html>`_ （Fully Sharded Data Parallel）能让我们处理更多更大的模型。LLaMA-Factory支持使用 FSDP 引擎进行分布式训练。
+PyTorch 的全切片数据并行技术 `FSDP <https://pytorch.org/docs/stable/fsdp.html>`_ （Fully Sharded Data Parallel）能让我们处理更多更大的模型。LLaMA-Factory支持使用 FSDP 引擎进行分布式训练。
 
 FSDP 的参数 ``ShardingStrategy`` 的不同取值决定了模型的划分方式：
 

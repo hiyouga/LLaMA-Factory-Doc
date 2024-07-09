@@ -7,16 +7,16 @@
 #. 昇腾npu计算相关 Toolkit 和 Kernels库正常安装
 #. torch-npu库正常安装
 
-另外python版本建议使用3.10， 目前该版本对于npu的使用情况会相对稳定，其他版本可能会遇到一些未知的情况
+另外 python 版本建议使用3.10， 目前该版本对于npu的使用情况会相对稳定，其他版本可能会遇到一些未知的情况
 
 依赖1:npu驱动
-----------
+---------------------
 依赖1一般在机器交付的时候，工程师会一起完成安装，使用 ``npu-smi info`` 验证如下
 
 .. image:: ../assets/advanced/npu-smi.png
 
 依赖2:npu开发包
-----------
+----------------------
 依赖2的安装方式有两种
 
 方法1（推荐）:使用华为昇腾团队提供的docker镜像
@@ -65,17 +65,19 @@
 
 
 依赖3:torch-npu
-----------
+---------------------
 依赖3建议在安装llama-factory的时候一起选配安装， 把 ``torch-npu`` 一起加入安装目标，命令如下
 
 .. code-block:: bash
+
     pip install -e ".[torch-npu,metrics]"
 
 依赖校验
-----------
+---------------
 3个依赖都安装后，可以通过如下的python脚本对 ``torch_npu`` 的可用情况做一下校验
 
 .. code-block:: python
+
     import torch
     import torch_npu
     print(torch.npu.is_available())
@@ -85,7 +87,7 @@
 .. image:: ../assets/advanced/npu-torch.png
 
 在llamafactory中使用npu
-----------
+--------------------------
 前面依赖安装完毕和完成校验后，即可像文档的其他部分一样正常使用 ``llamafactory-cli`` 的相关功能，npu的使用是无侵入的。主要的区别是需要修改一下命令行中 设备变量使用
 将原来的Nvidia卡的变量 ``CUDA_VISIBLE_DEVICES`` 替换为 ``ASCEND_RT_VISIBLE_DEVICES``， 类似如下命令
 
