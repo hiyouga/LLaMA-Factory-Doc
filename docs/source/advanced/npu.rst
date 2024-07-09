@@ -11,7 +11,8 @@
 
 依赖1
 ----------
-依赖1一般在机器交付的时候，工程师会一起完成安装，使用``npu-smi info``验证如下
+依赖1一般在机器交付的时候，工程师会一起完成安装，使用`` npu-smi info ``验证如下
+
 .. image:: ../assets/advanced/npu-smi.png
 
 依赖2
@@ -40,6 +41,7 @@
      - 0.13.2
 
 可以按照`官方指导 <https://www.hiascend.com/document/detail/en/CANNCommunityEdition/600alphaX/softwareinstall/instg/atlasdeploy_03_0031.html>`_ 或者使用以下命令完成安装
+
 .. code-block:: bash
     # replace the url according to your CANN version and devices
     # install CANN Toolkit
@@ -59,30 +61,34 @@
 
 依赖3
 ----------
-依赖3建议在安装llama-factory的时候一起选配安装， 把 ``torch-npu``一起加入安装目标，命令如下
+依赖3建议在安装llama-factory的时候一起选配安装， 把 `` torch-npu ``一起加入安装目标，命令如下
+
 .. code-block:: bash
     pip install -e ".[torch-npu,metrics]"
 
 依赖校验
 ----------
-3个依赖都安装后，可以通过如下的python脚本对``torch_npu``的可用情况做一下校验
+3个依赖都安装后，可以通过如下的python脚本对`` torch_npu ``的可用情况做一下校验
+
 .. code-block:: python
     import torch
     import torch_npu
     print(torch.npu.is_available())
 
 预期结果是打印true
+
 .. image:: ../assets/advanced/npu-torch.png
 
 开始使用npu
 ----------
 前面依赖安装完毕和完成校验后，即可像文档的其他部分一样正常使用 llamafactory-cli 的相关功能，主要的区别是需要修改一下 可用设备的变量使用
-将原来的Nvidia卡的变量``CUDA_VISIBLE_DEVICES`` 替换为 ``ASCEND_RT_VISIBLE_DEVICES``， 类似如下命令
+将原来的Nvidia卡的变量`` CUDA_VISIBLE_DEVICES `` 替换为 `` ASCEND_RT_VISIBLE_DEVICES ``， 类似如下命令
+
 .. code-block:: bash
     ASCEND_RT_VISIBLE_DEVICES=0,1 llamafactory-cli train examples/train_lora/llama3_lora_sft.yaml
 
 .. note::
-    如果在推理过程中遇到了长时间卡顿或者其他错误，请尝试在``llamafactory-cli`` 的配置参数中指定 ``do_sample`` 为 ``false`` 即可，比如在yaml中修改
+    如果在推理过程中遇到了长时间卡顿或者其他错误，请尝试在`` llamafactory-cli `` 的配置参数中指定 `` do_sample `` 为 `` false `` 即可，比如在yaml中修改
 
     .. code-block:: yaml
         do_sample: false
