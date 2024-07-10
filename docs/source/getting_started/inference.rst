@@ -106,6 +106,11 @@ vllm推理框架
     predict_with_generate: true
     ddp_timeout: 180000000
 
+.. note::
+
+    只有 ``stage`` 为 ``sft`` 的时候才可设置 ``predict_with_generate`` 为 ``true``
+
+
 api
 ~~~~~~~~~~~~~~~~~
 如果您需要使用 api 进行批量推理，您只需指定模型、适配器（可选）、模板、微调方式等信息。
