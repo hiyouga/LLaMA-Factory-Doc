@@ -3,16 +3,16 @@
 
 LLaMA-Factory 支持多种推理方式。
 
-您可以使用 ``llamafactory-cli chat`` 或 ``llamafactory-cli webchat`` 进行推理与模型对话。对话时配置文件只需指定原始模型 ``model_name_or_path`` 和 ``template`` ，并根据是否是微调模型指定 ``adapter_name_or_path`` 和 ``finetuning_type``。
+您可以使用 ``llamafactory-cli chat inference_config.yaml`` 或 ``llamafactory-cli webchat inference_config.yaml`` 进行推理与模型对话。对话时配置文件只需指定原始模型 ``model_name_or_path`` 和 ``template`` ，并根据是否是微调模型指定 ``adapter_name_or_path`` 和 ``finetuning_type``。
 
-如果您希望向模型输入大量数据集并记录推理输出，您可以使用 ``llamafactory-cli train`` 使用数据集或 ``llamafaactory-cli api`` 使用 api 进行批量推理。
+如果您希望向模型输入大量数据集并记录推理输出，您可以使用 ``llamafactory-cli train inference_config.yaml`` 使用数据集或 ``llamafactory-cli api`` 使用 api 进行批量推理。
 
 .. note::
     使用任何方式推理时，模型 ``model_name_or_path`` 需要存在且与 ``template`` 相对应。
 
 原始模型推理配置
 ----------------------------
-对于原始模型推理，只需指定原始模型 ``model_name_or_path`` 和 ``template`` 即可。
+对于原始模型推理， ``inference_config.yaml``中 只需指定原始模型 ``model_name_or_path`` 和 ``template`` 即可。
 
 .. code-block:: yaml
 

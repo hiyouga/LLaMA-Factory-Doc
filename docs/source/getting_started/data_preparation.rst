@@ -3,7 +3,7 @@
 数据处理
 ============================
 
-`dataset_info.json <https://github.com/hiyouga/LLaMA-Factory/blob/main/data/dataset_info.json/>`_ 包含了所有可用的数据集。如果您希望使用自定义数据集，请 **务必** 在 ``dataset_info.json`` 文件中添加数据集描述，并通过修改 ``dataset: 数据集名称`` 配置来使用数据集。
+`dataset_info.json <https://github.com/hiyouga/LLaMA-Factory/blob/main/data/dataset_info.json/>`_ 包含了所有经过预处理的本地数据集以及在线数据集。如果您希望使用自定义数据集，请 **务必** 在 ``dataset_info.json`` 文件中添加数据集描述，并通过修改 ``dataset: 数据集名称`` 配置来使用数据集。
 
 目前我们支持 :ref:`Alpaca<alpaca>` 格式和  :ref:`ShareGPT<Sharegpt>` 格式的数据集
 

@@ -3,7 +3,7 @@
 
 在完成模型训练后，您可以通过 ``llamafactory-cli eval examples/train_lora/llama3_lora_eval.yaml`` 来评估模型效果。
 
-配置示例文件 ``examples/train_lora/llama3_lora_eval.yaml``具体如下：
+配置示例文件 ``examples/train_lora/llama3_lora_eval.yaml`` 具体如下：
 
 .. code-block:: yaml
 
