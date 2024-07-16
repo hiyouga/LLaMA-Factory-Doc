@@ -197,9 +197,6 @@ Galore
 
 当您需要在训练中使用 GaLore（Gradient Low-Rank Projection）算法时，可以通过设置 ``GaloreArguments`` 中的参数进行配置。
 
-.. warning:: 
-
-  * 不要将 LoRA 和 GaLore/BAdam 一起使用。
 
 下面是一个例子：
 
@@ -218,7 +215,10 @@ Galore
     ...
     
 
+.. warning:: 
 
+  * 不要将 LoRA 和 GaLore/BAdam 一起使用。
+  * ``galore_layerwise``为 ``true``时请不要设置 ``gradient_accumulation``参数。
 
 .. list-table:: GaLoreArguments
    :widths: 30 10 60
