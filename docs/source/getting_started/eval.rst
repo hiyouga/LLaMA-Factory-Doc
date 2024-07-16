@@ -16,8 +16,7 @@
     finetuning_type: lora
 
     ### dataset
-    task: mmlu
-    split: test
+    task: mmlu_test
     template: fewshot
     lang: en
     n_shot: 5
@@ -44,7 +43,7 @@
      - 介绍
    * - task
      - str
-     - 评估任务的名称。
+     - 评估任务的名称，可选项有 mmlu_test, ceval_validation, cmmlu_test
    * - task_dir
      - str
      - 包含评估数据集的文件夹路径，默认值为 ``evaluation``。
