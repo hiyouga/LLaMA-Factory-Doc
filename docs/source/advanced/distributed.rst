@@ -1,3 +1,5 @@
+.. _分布训练:
+
 分布训练
 ==================
 LLaMA-Factory 支持单机多卡和多机多卡分布式训练。同时也支持 :ref:`DDP<NativeDD>` ,  :ref:`DeepSpeed <deepspeed>` 和 FSDP 三种分布式引擎。
@@ -684,7 +686,7 @@ accelerate
 
     accelerate launch \
     --config_file fsdp_config.yaml \
-    train.py llm_config.yaml
+    src/train.py llm_config.yaml
 
 .. warning:: 
 

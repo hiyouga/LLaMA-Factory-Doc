@@ -3,11 +3,11 @@
 数据处理
 ============================
 
-`dataset_info.json <https://github.com/hiyouga/LLaMA-Factory/blob/main/data/dataset_info.json/>`_ 包含了所有经过预处理的 **本地数据集** 以及 **在线数据集**。如果您希望使用自定义数据集，请 **务必** 在 ``dataset_info.json`` 文件中添加数据集描述，并通过修改 ``dataset: 数据集名称`` 配置来使用数据集。
+`dataset_info.json <https://github.com/hiyouga/LLaMA-Factory/blob/main/data/dataset_info.json/>`_ 包含了所有经过预处理的 **本地数据集** 以及 **在线数据集**。如果您希望使用自定义数据集，请 **务必** 在 ``dataset_info.json`` 文件中添加对数据集及其内容的描述，并通过修改 ``dataset: 数据集名称`` 配置来使用数据集。
 
-目前我们支持 :ref:`Alpaca<alpaca>` 格式和  :ref:`ShareGPT<Sharegpt>` 格式的数据集
+目前我们支持 :ref:`Alpaca<alpaca>` 格式和  :ref:`ShareGPT<Sharegpt>` 格式的数据集。
 
-对于 Alpaca 格式, 请指定 ``formatting`` 为 ``alpaca``，对于 ShareGPT 格式，请指定 ``formatting`` 为 ``sharegpt``。
+.. 一个完整的例子如下，
 
 .. _alpaca: 
 
@@ -77,6 +77,28 @@ Alpaca
       "history": [
         ["第一轮指令（选填）", "第一轮回答（选填）"],
         ["第二轮指令（选填）", "第二轮回答（选填）"]
+      ]
+    }
+  ]
+
+下面提供一个 alpaca 格式 **多轮** 对话的例子，对于单轮对话只需省略 ``history`` 列即可。
+
+.. code-block:: json
+
+  [
+    {
+      "instruction": "今天的天气怎么样？",
+      "input": "",
+      "output": "今天的天气不错，是晴天。",
+      "history": [
+        [
+          "今天会下雨吗？", 
+          "今天不会下雨，是个好天气。"
+        ],
+        [
+          "今天适合出去玩吗？", 
+          "非常适合，空气质量很好。"
+        ]
       ]
     }
   ]
