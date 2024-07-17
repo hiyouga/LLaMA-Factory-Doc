@@ -119,7 +119,7 @@ api
 ~~~~~~~~~~~~~~~~~
 如果您需要使用 api 进行批量推理，您只需指定模型、适配器（可选）、模板、微调方式等信息。
 
-下面提供一个示例,您可以使用 ``llamafactory-cli api examples/inference/llama3_lora_sft.yaml`` 使用 api 进行批量推理。
+下面是一个配置文件的示例：
 
 .. code-block:: yaml
 
@@ -129,5 +129,19 @@ api
     template: llama3
     finetuning_type: lora
 
-关于使用api:
+
+下面是一个启动并调用 api 服务的示例：
+
+您可以使用 ``API_PORT=8000 CUDA_VISIBLE_DEVICES=0 llamafactory-cli api examples/inference/llama3_lora_sft.yaml`` 启动 api 服务并运行以下示例程序进行调用：
+
+.. code-block:: python
+
+    # api_call_example.py
+    from openai import OpenAI
+    client = OpenAI(api_key="0",base_url="http://0.0.0.0:8000/v1")
+    messages = [{"role": "user", "content": "Who are you?"}]
+    result = client.chat.completions.create(messages=messages, model="meta-llama/Meta-Llama-3-8B-Instruct")
+    print(result.choices[0].message)
+
+
 
