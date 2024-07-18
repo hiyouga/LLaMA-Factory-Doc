@@ -41,9 +41,9 @@ LLaMA-Factory 支持多种推理方式。
 
 .. code-block:: bash
 
-    llamafactory-cli webchat llava.yaml
+    llamafactory-cli webchat examples/inferece/llava1_5.yaml
 
-``llava.yaml`` 的配置示例如下：
+``examples/inference/llava1_5.yaml`` 的配置示例如下：
 
 .. code-block:: yaml
 
@@ -69,6 +69,7 @@ vllm推理框架
 
 
 .. _批量推理:
+
 批量推理
 -------------------------
 
