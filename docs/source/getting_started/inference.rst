@@ -75,7 +75,7 @@ vllm推理框架
 
 数据集
 ~~~~~~~~~~~~~~~~~~~~~~~
-使用数据集批量推理时，您需要指定模型、适配器（可选）、输入数据集、输出路径等信息并且指定 ``do_predict`` 为 ``true``。
+使用数据集批量推理时，您需要指定模型、适配器（可选）、评估数据集、输出路径等信息并且指定 ``do_predict`` 为 ``true``。
 下面提供一个 **示例**,您可以通过 ``llamafactory-cli train examples/train_lora/llama3_lora_predict.yaml`` 使用数据集进行批量推理。
 
 如果您需要多卡推理，则需要在配置文件中指定 ``deepspeed`` 参数。
@@ -95,7 +95,7 @@ vllm推理框架
     finetuning_type: lora
 
     ### dataset
-    dataset: identity,alpaca_en_demo
+    eval_dataset: identity,alpaca_en_demo
     template: llama3
     cutoff_len: 1024
     max_samples: 50
