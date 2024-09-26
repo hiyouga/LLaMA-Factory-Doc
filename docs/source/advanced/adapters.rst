@@ -135,13 +135,13 @@ LoRA
      - 应用 LoRA 方法的模块名称。使用逗号分隔多个模块，使用 ``all`` 指定所有模块。默认值为 ``all``
    * - loraplus_lr_ratio[非必须]
      - float
-     - LoRA+ 学习率比例(``λ = ηB/ηA``)。 ``ηA, ηB`` 分别是 adapter matrices A 与 B 的学习率。LoRA+ 的理想值与模型选择和任务选择有关。默认值为 ``None``
+     - LoRA+ 学习率比例(``λ = ηB/ηA``)。 ``ηA, ηB`` 分别是 adapter matrices A 与 B 的学习率。LoRA+ 的理想取值与所选择的模型和任务有关。默认值为 ``None``
    * - loraplus_lr_embedding[非必须]
      - float
      - LoRA+ 嵌入层的学习率, 默认值为 ``1e-6``
    * - use_rslora
      - bool
-     - 是否使用秩稳定 LoRA(Rank-Stabilized LoRA)，默认值为 ``False``
+     - 是否使用秩稳定 LoRA(Rank-Stabilized LoRA)，默认值为 ``False``。
    * - use_dora
      - bool
      - 是否使用权重分解 LoRA（Weight-Decomposed LoRA），默认值为 ``False``
@@ -168,9 +168,8 @@ LoRA+
 rsLoRA
 ~~~~~~~~~~~~~~~~~~~~~~
 
-LoRA 通过添加低秩适配器进行微调，然而当增大 ``lora_rank`` 时，其训练速度会减慢。rsLoRA(Rank-Stabilized LoRA) 通过修改缩放因子使得模型训练更加稳定。
-使用 rsLoRA 时， ``lora_rank`` 的大小对训练速度没有影响。 注意，使用rsLoRA时， 您只需要将 ``use_rslora`` 设置为 ``True`` ，而无需修改 ``lora_rank``, ``lora_alpha`` 等参数。
-
+LoRA 通过添加低秩适配器进行微调，然而 ``lora_rank`` 的增大往往会导致梯度塌陷，使得训练变得不稳定。这使得在使用较大的 ``lora_rank`` 进行 LoRA 微调时较难取得令人满意的效果。rsLoRA(Rank-Stabilized LoRA) 通过修改缩放因子使得模型训练更加稳定。
+使用 rsLoRA 时， 您只需要将 ``use_rslora`` 设置为 ``True`` 并设置所需的 ``lora_rank``。
 
 DoRA
 ~~~~~~~~~~~~~~~~~~~

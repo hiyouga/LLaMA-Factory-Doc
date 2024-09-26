@@ -92,6 +92,8 @@ SFT 训练
     - 每个设备上训练的批次大小
   * - gradient_accumulation_steps
     - 梯度积累步数
+  * - max_grad_norm
+    - 梯度裁剪阈值
   * - learning_rate
     - 学习率
   * - lr_scheduler_type
@@ -100,3 +102,9 @@ SFT 训练
     - 训练周期数
   * - bf16
     - 是否使用 bf16 格式
+  * - warmup_ratio
+    - 学习率预热比例
+  * - warmup_steps
+    - 学习率预热步数
+  * - push_to_hub
+    - 是否推送模型到 Huggingface
