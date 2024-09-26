@@ -135,7 +135,7 @@ LoRA
      - 应用 LoRA 方法的模块名称。使用逗号分隔多个模块，使用 ``all`` 指定所有模块。默认值为 ``all``
    * - loraplus_lr_ratio[非必须]
      - float
-     - LoRA+ 学习率比例(``λ = ηB/ηA``)。 ``ηA, ηB`` 分别是 adapter matrices A 与 B 的学习率。实验表明，将这个值设置为 ``16`` 会取得较好的初始结果。当任务较为复杂时需要将这个值设置得大一些。默认值为 ``None``
+     - LoRA+ 学习率比例(``λ = ηB/ηA``)。 ``ηA, ηB`` 分别是 adapter matrices A 与 B 的学习率。LoRA+ 的理想值与模型选择和任务选择有关。默认值为 ``None``
    * - loraplus_lr_embedding[非必须]
      - float
      - LoRA+ 嵌入层的学习率, 默认值为 ``1e-6``
@@ -161,7 +161,7 @@ LoRA
 LoRA+
 ~~~~~~~~~~~~~~~~~~~~
 在LoRA中，适配器矩阵 A 和 B 的学习率相同。您可以通过设置 ``loraplus_lr_ratio`` 来调整学习率比例。在 LoRA+ 中，适配器矩阵 A 的学习率 ``ηA`` 即为优化器学习率。适配器矩阵 B 的学习率 ``ηB`` 为 ``λ * ηA``。
-其中 ``λ`` 为 ``loraplus_lr_ratio`` 的值，一般取16。
+其中 ``λ`` 为 ``loraplus_lr_ratio`` 的值。
 
 
 

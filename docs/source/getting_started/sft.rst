@@ -73,7 +73,7 @@ SFT 训练
   * - do_train
     - true用于训练, false用于评估
   * - finetuning_type
-    - 微调方式。可选: freeze, LoRA, full
+    - 微调方式。可选: freeze, lora, full
   * - lora_target
     - 采取LoRA方法的目标模块，默认值为 ``all``。
   * - dataset
