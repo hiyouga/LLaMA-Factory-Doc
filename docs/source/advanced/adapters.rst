@@ -5,27 +5,6 @@
 
 LLaMA-Factory 支持多种调优算法，包括： :ref:`Full Parameter Fine-tuning <full>` 、 :ref:`Freeze <Freeze>` 、 :ref:`LoRA <LoRA>` 、 :ref:`Galore <Galore>` 、 :ref:`BAdam <BAdam>` 。
 
-.. list-table:: 以微调Meta-Llama-3-8B-Instruct模型为例
-    :widths: 20 30 30
-    :header-rows: 1
-
-
-    * - 微调方法
-      - 所需显存
-    * - Full Parameter Fine-tuning
-      - * with deepspeed ZeRO-3:
-        * with Galore: 
-        * with BAdam: ~80GB
-    * - Freeze
-      - * 1 layer: ~32GB
-        * 2 layers: ~34GB
-        * 4 layers: ~38GB
-    * - LoRA(rank=8, alpha=16)
-      - * default:~32GB
-        * use_dora、use_pissa_init: ~34GB
-        * use_rslora: ~28GB
-
-
 .. _full:
 
 Full Parameter Fine-tuning

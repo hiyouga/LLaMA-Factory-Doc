@@ -12,7 +12,7 @@ LLaMA-Factory 支持多种推理方式。
 
 原始模型推理配置
 ----------------------------
-对于原始模型推理， ``inference_config.yaml``中 只需指定原始模型 ``model_name_or_path`` 和 ``template`` 即可。
+对于原始模型推理， ``inference_config.yaml`` 中 只需指定原始模型 ``model_name_or_path`` 和 ``template`` 即可。
 
 .. code-block:: yaml
 
