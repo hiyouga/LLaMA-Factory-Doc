@@ -42,5 +42,5 @@ Documentation
   advanced/quantization
   advanced/trainers
   advanced/npu
+  advanced/arguments
   advanced/extras
-

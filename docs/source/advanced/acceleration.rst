@@ -29,10 +29,21 @@ Unsloth
 
 `Unsloth <https://github.com/unslothai/unsloth/>`_ 框架支持 Llama, Mistral, Phi-3, Gemma, Yi, DeepSeek, Qwen等大语言模型并且支持 4-bit 和 16-bit 的 QLoRA/LoRA 微调，该框架在提高运算速度的同时还减少了显存占用。
 
-如果您想使用 Unsloth,请在启动训练时在训练配置文件中添加以下参数：
+如果您想使用 Unsloth, 请在启动训练时在训练配置文件中添加以下参数：
 
 .. code-block:: yaml
 
     use_unsloth: True 
 
 
+.. _ligerkernel:
+
+Liger Kernel
+---------------------------------------
+`Liger Kernel <https://github.com/linkedin/Liger-Kernel/>`_  是一个针对大规模语言模型（LLM）训练的性能优化框架, 可有效地提高吞吐量并减少内存占用。
+
+如果您想使用 Liger Kernel,请在启动训练时在训练配置文件中添加以下参数：
+
+.. code-block:: yaml
+
+    enable_liger_kernel: True 
