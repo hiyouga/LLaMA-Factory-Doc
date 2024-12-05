@@ -34,7 +34,7 @@
 NLG 评估
 --------------------------
 
-此外，您还可以通过 ``llamafactory-cli train examples/extras/nlg_eval/llama3_lora_predict.yaml`` 来评估模型的 NLG 指标。
+此外，您还可以通过 ``llamafactory-cli train examples/extras/nlg_eval/llama3_lora_predict.yaml`` 来获得模型的 BLEU 和 ROUGE 分数以评价模型生成质量。
 
 配置示例文件 ``examples/extras/nlg_eval/llama3_lora_predict.yaml`` 具体如下：
 

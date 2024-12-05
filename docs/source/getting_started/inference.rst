@@ -65,12 +65,11 @@ LLaMA-Factory 支持多种推理方式。
 
 数据集
 ~~~~~~~~~~~~~~~~~~~~~~~
-您可以通过以下指令启动 vllm 推理框架并使用数据集进行推理：
+您可以通过以下指令启动 vllm 推理框架并使用数据集进行批量推理：
 
 .. code-block:: python
 
     python scripts/vllm_infer.py --model_name_or_path path_to_merged_model --dataset alpaca_en_demo
-
 
 api
 ~~~~~~~~~~~~~~~~~
