@@ -1,9 +1,40 @@
 LoRA 合并
 #################
-当我们基于预训练模型训练好 LoRA 适配器后，我们不希望在每次推理的时候分别加载预训练模型和 LoRA 适配器，因此我们需要将预训练模型和 LoRA 适配器合并导出成一个模型。根据是否量化以及量化算法的不同，导出的配置文件有所区别。
+
+合并
+~~~~~~~~~~~~~~~~~~~~~~~
+
+当我们基于预训练模型训练好 LoRA 适配器后，我们不希望在每次推理的时候分别加载预训练模型和 LoRA 适配器，因此我们需要将预训练模型和 LoRA 适配器合并导出成一个模型，并根据需要选择是否量化。根据是否量化以及量化算法的不同，导出的配置文件也有所区别。
 
 您可以通过 ``llamafactory-cli export merge_config.yaml`` 指令来合并模型。其中 ``merge_config.yaml`` 需要您根据不同情况进行配置。
 
+``examples/merge_lora/llama3_lora_sft.yaml`` 提供了合并时的配置示例。
+
+.. code-block:: yaml
+
+    ### examples/merge_lora/llama3_lora_sft.yaml
+    ### model
+    model_name_or_path: meta-llama/Meta-Llama-3-8B-Instruct
+    adapter_name_or_path: saves/llama3-8b/lora/sft
+    template: llama3
+    finetuning_type: lora
+
+    ### export
+    export_dir: models/llama3_lora_sft
+    export_size: 2
+    export_device: cpu
+    export_legacy_format: false
+
+
+.. note::
+    * 模型 ``model_name_or_path`` 需要存在且与 ``template`` 相对应。 ``adapter_name_or_path`` 需要与微调中的适配器输出路径 ``output_dir`` 相对应。
+    * 合并 LoRA 适配器时，不要使用量化模型或指定量化位数。您可以使用本地或下载的未量化的预训练模型进行合并。
+
+
+量化
+~~~~~~~~~~~~~~~~~~~~~~~
+
+在完成模型合并并获得完整模型后，为了优化部署效果，人们通常会基于显存占用、使用成本和推理速度等因素，选择通过量化技术对模型进行压缩，从而实现更高效的部署。
 
 量化（Quantization）通过数据精度压缩有效地减少了显存使用并加速推理。LLaMA-Factory 支持多种量化方法，包括:
 
@@ -67,30 +98,3 @@ QLoRA 是一种在 4-bit 量化模型基础上使用 LoRA 方法进行训练的�
     export_device: cpu
     export_legacy_format: false
 
-
-
-
-合并
-~~~~~~~~~~~~~~~~~~~~~~~
-
-``examples/merge_lora/llama3_lora_sft.yaml`` 提供了合并时的配置示例。
-
-.. code-block:: yaml
-
-    ### examples/merge_lora/llama3_lora_sft.yaml
-    ### model
-    model_name_or_path: meta-llama/Meta-Llama-3-8B-Instruct
-    adapter_name_or_path: saves/llama3-8b/lora/sft
-    template: llama3
-    finetuning_type: lora
-
-    ### export
-    export_dir: models/llama3_lora_sft
-    export_size: 2
-    export_device: cpu
-    export_legacy_format: false
-
-
-.. note::
-    * 模型 ``model_name_or_path`` 需要存在且与 ``template`` 相对应。 ``adapter_name_or_path`` 需要与微调中的适配器输出路径 ``output_dir`` 相对应。
-    * 合并 LoRA 适配器时，不要使用量化模型或指定量化位数。您可以使用本地或下载的未量化的预训练模型进行合并。

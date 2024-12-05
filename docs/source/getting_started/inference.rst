@@ -7,6 +7,9 @@ LLaMA-Factory 支持多种推理方式。
 
 如果您希望向模型输入大量数据集并记录推理输出，您可以使用 ``llamafactory-cli train inference_config.yaml`` 使用数据集或 ``llamafactory-cli api`` 使用 api 进行批量推理。
 
+默认情况下，模型推理将使用 Huggingface 框架。 您也可以指定 ``infer_backend`` 参数以使用 vllm 推理引擎以获得更快的推理速度。 
+
+
 .. note::
     使用任何方式推理时，模型 ``model_name_or_path`` 需要存在且与 ``template`` 相对应。
 
@@ -19,6 +22,7 @@ LLaMA-Factory 支持多种推理方式。
     ### examples/inference/llama3.yaml
     model_name_or_path: meta-llama/Meta-Llama-3-8B-Instruct
     template: llama3
+    infer_backend: huggingface #choices： [huggingface, vllm]  
 
 
 微调模型推理配置
@@ -32,6 +36,7 @@ LLaMA-Factory 支持多种推理方式。
     adapter_name_or_path: saves/llama3-8b/lora/sft
     template: llama3
     finetuning_type: lora
+    infer_backend: huggingface #choices： [huggingface, vllm]
 
 
 多模态模型
@@ -49,23 +54,8 @@ LLaMA-Factory 支持多种推理方式。
 
     model_name_or_path: llava-hf/llava-1.5-7b-hf
     template: vicuna
-    visual_inputs: true
-
-
-
-
-vllm推理框架
-------------------------
-若使用vllm推理框架，请在配置中指定： ``infer_backend`` 与 ``vllm_enforce_eager``。
-
-.. code-block:: yaml
-
-    ### examples/inference/llama3_vllm.yaml
-    model_name_or_path: meta-llama/Meta-Llama-3-8B-Instruct
-    template: llama3
-    infer_backend: vllm
-    vllm_enforce_eager: true
-
+    infer_backend: huggingface #choices： [huggingface, vllm]
+    
 
 
 .. _批量推理:
@@ -75,45 +65,11 @@ vllm推理框架
 
 数据集
 ~~~~~~~~~~~~~~~~~~~~~~~
-使用数据集批量推理时，您需要指定模型、适配器（可选）、评估数据集、输出路径等信息并且指定 ``do_predict`` 为 ``true``。
-下面提供一个 **示例**,您可以通过 ``llamafactory-cli train examples/train_lora/llama3_lora_predict.yaml`` 使用数据集进行批量推理。
+您可以通过以下指令启动 vllm 推理框架并使用数据集进行推理：
 
-如果您需要多卡推理，则需要在配置文件中指定 ``deepspeed`` 参数。
+.. code-block:: python
 
-.. code-block:: yaml
-
-    # examples/train_lora/llama3_lora_predict.yaml
-    ### model
-    model_name_or_path: meta-llama/Meta-Llama-3-8B-Instruct
-    adapter_name_or_path: saves/llama3-8b/lora/sft
-    
-    deepspeed: examples/deepspeed/ds_z3_config.yaml # deepspeed配置文件
-    
-    ### method
-    stage: sft
-    do_predict: true
-    finetuning_type: lora
-
-    ### dataset
-    eval_dataset: identity,alpaca_en_demo
-    template: llama3
-    cutoff_len: 1024
-    max_samples: 50
-    overwrite_cache: true
-    preprocessing_num_workers: 16
-
-    ### output
-    output_dir: saves/llama3-8b/lora/predict
-    overwrite_output_dir: true
-
-    ### eval
-    per_device_eval_batch_size: 1
-    predict_with_generate: true
-    ddp_timeout: 180000000
-
-.. note::
-
-    只有 ``stage`` 为 ``sft`` 的时候才可设置 ``predict_with_generate`` 为 ``true``
+    python scripts/vllm_infer.py --model_name_or_path path_to_merged_model --dataset alpaca_en_demo
 
 
 api
@@ -124,7 +80,7 @@ api
 
 .. code-block:: yaml
 
-    # examples/inference/llama3_lora_sft.yaml
+    ### examples/inference/llama3_lora_sft.yaml
     model_name_or_path: meta-llama/Meta-Llama-3-8B-Instruct
     adapter_name_or_path: saves/llama3-8b/lora/sft
     template: llama3

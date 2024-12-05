@@ -175,10 +175,10 @@ llamafactory-cli
 
 .. code-block:: bash
 
-    FORCE_TORCHRUN=1 NNODES=2 RANK=0 MASTER_ADDR=192.168.0.1 MASTER_PORT=29500 \
+    FORCE_TORCHRUN=1 NNODES=2 NODE_RANK=0 MASTER_ADDR=192.168.0.1 MASTER_PORT=29500 \
     llamafactory-cli train examples/train_lora/llama3_lora_sft.yaml
     
-    FORCE_TORCHRUN=1 NNODES=2 RANK=1 MASTER_ADDR=192.168.0.1 MASTER_PORT=29500 \
+    FORCE_TORCHRUN=1 NNODES=2 NODE_RANK=1 MASTER_ADDR=192.168.0.1 MASTER_PORT=29500 \
     llamafactory-cli train examples/train_lora/llama3_lora_sft.yaml
 
 
@@ -192,7 +192,7 @@ llamafactory-cli
       - 是否强制使用torchrun
     * - NNODES
       - 节点数量
-    * - RANK
+    * - NODE_RANK
       - 各个节点的rank。
     * - MASTER_ADDR
       - 主节点的地址。
@@ -364,8 +364,8 @@ LLaMA-Factory 支持使用 DeepSpeed 的多机多卡训练，您可以通过以�
 
 .. code-block:: bash
 
-    FORCE_TORCHRUN=1 NNODES=2 RANK=0 MASTER_ADDR=192.168.0.1 MASTER_PORT=29500 llamafactory-cli train examples/train_lora/llama3_lora_sft_ds3.yaml
-    FORCE_TORCHRUN=1 NNODES=2 RANK=1 MASTER_ADDR=192.168.0.1 MASTER_PORT=29500 llamafactory-cli train examples/train_lora/llama3_lora_sft_ds3.yaml
+    FORCE_TORCHRUN=1 NNODES=2 NODE_RANK=0 MASTER_ADDR=192.168.0.1 MASTER_PORT=29500 llamafactory-cli train examples/train_lora/llama3_lora_sft_ds3.yaml
+    FORCE_TORCHRUN=1 NNODES=2 NODE_RANK=1 MASTER_ADDR=192.168.0.1 MASTER_PORT=29500 llamafactory-cli train examples/train_lora/llama3_lora_sft_ds3.yaml
 
 
 deepspeed
