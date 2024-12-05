@@ -1,7 +1,7 @@
 加速
 =====================
 
-LLaMA-Factory 支持多种加速技术，包括：:ref:`FlashAttention <flashattn>` 、 :ref:`Unsloth <sloth>`  。
+LLaMA-Factory 支持多种加速技术，包括：:ref:`FlashAttention <flashattn>` 、 :ref:`Unsloth <sloth>` 、 :ref:`Liger Kernel <ligerkernel>`  。
 
 
 
@@ -40,7 +40,7 @@ Unsloth
 
 Liger Kernel
 ---------------------------------------
-`Liger Kernel <https://github.com/linkedin/Liger-Kernel/>`_  是一个针对大规模语言模型（LLM）训练的性能优化框架, 可有效地提高吞吐量并减少内存占用。
+`Liger Kernel <https://github.com/linkedin/Liger-Kernel/>`_  是一个大语言模型训练的性能优化框架, 可有效地提高吞吐量并减少内存占用。
 
 如果您想使用 Liger Kernel,请在启动训练时在训练配置文件中添加以下参数：
 

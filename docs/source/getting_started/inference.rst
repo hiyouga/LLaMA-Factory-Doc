@@ -5,9 +5,9 @@ LLaMA-Factory 支持多种推理方式。
 
 您可以使用 ``llamafactory-cli chat inference_config.yaml`` 或 ``llamafactory-cli webchat inference_config.yaml`` 进行推理与模型对话。对话时配置文件只需指定原始模型 ``model_name_or_path`` 和 ``template`` ，并根据是否是微调模型指定 ``adapter_name_or_path`` 和 ``finetuning_type``。
 
-如果您希望向模型输入大量数据集并记录推理输出，您可以使用 ``llamafactory-cli train inference_config.yaml`` 使用数据集或 ``llamafactory-cli api`` 使用 api 进行批量推理。
+如果您希望向模型输入大量数据集并保存推理结果，您可以启动 :ref:`vllm <vllm>` 推理引擎对大量数据集进行快速的批量推理。您也可以通过 :ref:`部署 api <api>` 服务的形式通过 api 调用来进行批量推理。
 
-默认情况下，模型推理将使用 Huggingface 框架。 您也可以指定 ``infer_backend`` 参数以使用 vllm 推理引擎以获得更快的推理速度。 
+默认情况下，模型推理将使用 Huggingface 引擎。 您也可以指定 ``infer_backend: vllm`` 以使用 vllm 推理引擎以获得更快的推理速度。 
 
 
 .. note::
@@ -63,13 +63,19 @@ LLaMA-Factory 支持多种推理方式。
 批量推理
 -------------------------
 
+
+.. _vllm:
+
 数据集
 ~~~~~~~~~~~~~~~~~~~~~~~
-您可以通过以下指令启动 vllm 推理框架并使用数据集进行批量推理：
+您可以通过以下指令启动 vllm 推理引擎并使用数据集进行批量推理：
 
 .. code-block:: python
 
     python scripts/vllm_infer.py --model_name_or_path path_to_merged_model --dataset alpaca_en_demo
+
+
+.. _api:
 
 api
 ~~~~~~~~~~~~~~~~~
