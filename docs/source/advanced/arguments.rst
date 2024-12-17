@@ -344,7 +344,7 @@ GaLore
      - None
    * - max_samples
      - Optional[int]
-     - 每个数据集的最大样本数量，使用逗号分隔。
+     - 每个数据集的最大样本数：设置后，每个数据集的样本数将被截断至指定的 max_samples。
      - None
    * - eval_num_beams
      - Optional[int]
