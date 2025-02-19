@@ -3,7 +3,66 @@
 
 
 微调参数
-------------------------
+-----------------------------
+
+基本参数
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. list-table:: FinetuningArguments
+   :widths: 10 30 60 15
+   :header-rows: 1
+
+   * - 参数名称
+     - 类型
+     - 介绍
+     - 默认值
+   * - pure_bf16
+     - bool
+     - 是否以纯 bf16 精度训练模型（不使用 AMP）。
+     - False
+   * - stage
+     - Literal["pt", "sft", "rm", "ppo", "dpo", "kto"]
+     - 训练阶段
+     - sft
+   * - finetuning_type
+     - Literal["lora", "freeze", "full"]
+     - 微调方法
+     - lora
+   * - use_llama_pro
+     - bool
+     - 是否仅训练扩展块中的参数（LLaMA Pro 模式）。
+     - False
+   * - use_adam_mini
+     - bool
+     - 是否使用 Adam-mini 优化器。
+     - False
+   * - freeze_vision_tower
+     - bool
+     - MLLM 训练时是否冻结视觉塔。
+     - True
+   * - freeze_multi_modal_projector
+     - bool
+     - MLLM 训练时是否冻结多模态投影器。
+     - True
+   * - train_mm_proj_only
+     - bool
+     - 是否仅训练多模态投影器。
+     - False
+   * - compute_accuracy
+     - bool
+     - 是否在评估时计算 token 级别的准确率。
+     - False
+   * - disable_shuffling
+     - bool
+     - 是否禁用训练集的随机打乱。
+     - False
+   * - plot_loss
+     - bool
+     - 是否保存训练过程中的损失曲线。
+     - False
+   * - include_effective_tokens_per_second
+     - bool
+     - 是否计算有效的每秒 token 数。
+     - False
 
 
 LoRA
@@ -185,6 +244,56 @@ Freeze
      - None
 
 
+Apollo
+~~~~~~~~~~~~~~~~~~~~~~~~~
+.. list-table:: ApolloArguments
+   :widths: 20 25 60 15
+   :header-rows: 1
+
+   * - 参数名称
+     - 类型
+     - 介绍
+     - 默认值
+   * - use_apollo
+     - bool
+     - 是否使用 APOLLO 优化器。
+     - False
+   * - apollo_target
+     - str
+     - 适用 APOLLO 的模块名称。使用逗号分隔多个模块，使用 `all` 指定所有线性模块。
+     - all
+   * - apollo_rank
+     - int
+     - APOLLO 梯度的秩。
+     - 16
+   * - apollo_update_interval
+     - int
+     - 更新 APOLLO 投影的步数间隔。
+     - 200
+   * - apollo_scale
+     - float
+     - APOLLO 缩放系数。
+     - 32.0
+   * - apollo_proj
+     - Literal["svd", "random"]
+     - APOLLO 低秩投影算法类型（svd 或 random）。
+     - random
+   * - apollo_proj_type
+     - Literal["std", "right", "left"]
+     - APOLLO 投影类型。
+     - std
+   * - apollo_scale_type
+     - Literal["channel", "tensor"]
+     - APOLLO 缩放类型（channel 或 tensor）。
+     - channel
+   * - apollo_layerwise
+     - bool
+     - 是否启用层级更新以进一步节省内存。
+     - False
+   * - apollo_scale_front
+     - bool
+     - 是否在梯度缩放前使用范数增长限制器。
+     - False
 
 
 BAdam
@@ -298,9 +407,9 @@ GaLore
      - str
      - 存储数据集的文件夹路径。
      - "data"
-   * - image_dir
+   * - media_dir
      - Optional[str]
-     - 存储图像或视频的文件夹路径。如果未指定，默认为 dataset_dir。
+     - 存储图像、视频或音频的文件夹路径。如果未指定，默认为 dataset_dir。
      - None
    * - cutoff_len
      - int
@@ -324,7 +433,7 @@ GaLore
      - 16384
    * - mix_strategy
      - Literal["concat", "interleave_under", "interleave_over"]
-     - 数据集混合策略，支持 concat（连接）、 interleave（混合）、 undersampling（减少多数类样本数）、 oversampling（增加少数类样本数）。
+     - 数据集混合策略，支持 concat、 interleave_under、 interleave_over。
      - concat
    * - interleave_probs
      - Optional[str]
@@ -431,8 +540,8 @@ GaLore
      - 是否使用节省内存的模型加载方式。
      - True
    * - rope_scaling
-     - Optional[Literal["linear", "dynamic"]]
-     - RoPE Embedding 的缩放策略，支持 linear 或 dynamic。
+     - Optional[Literal["linear", "dynamic", "yarn", "llama3"]]
+     - RoPE Embedding 的缩放策略，支持 linear、dynamic、yarn 或 llama3。
      - None
    * - flash_attn
      - Literal["auto", "disabled", "sdpa", "fa2"]
@@ -466,6 +575,10 @@ GaLore
      - bool
      - 是否禁用梯度检查点。
      - False
+   * - use_reentrant_gc
+     - bool
+     - 是否启用可重入梯度检查点
+     - True
    * - upcast_layernorm
      - bool
      - 是否将 layernorm 层权重精度提高至 fp32。
@@ -510,6 +623,10 @@ GaLore
      - bool
      - 是否打印模型参数的状态。
      - False
+   * - trust_remote_code
+     - bool
+     - 是否信任来自 Hub 上数据集/模型的代码执行。
+     - False
    * - compute_dtype
      - Optional[torch.dtype]
      - 用于计算模型输出的数据类型，无需手动指定。
@@ -538,28 +655,38 @@ GaLore
      - 类型
      - 介绍
      - 默认值
-   * - image_resolution
+   * - image_max_pixels
      - int
-     - 图像分辨率上限。
-     - 512 x 512
-   * - video_resolution
+     - 图像输入的最大像素数。
+     - 768 x 768
+   * - image_min_pixels
      - int
-     - 视频分辨率上限。
-     - 128 x 128
+     - 图像输入的最小像素数。
+     - 32 x 32
+   * - video_max_pixels
+     - int
+     - 视频输入的最大像素数。
+     - 256 x 256
+   * - video_min_pixels
+     - int
+     - 视频输入的最小像素数。
+     - 16 x 16
    * - video_fps
      - float
-     - 指定视频输入的帧率。
+     - 视频输入的采样帧率（每秒采样帧数）。
      - 2.0
    * - video_maxlen
      - int
-     - 指定视频输入的最大帧数。
-     - 64
+     - 视频输入的最大采样帧数。
+     - 128
+
+
 
 
 vllm 推理
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. list-table:: vllmArguments
+.. list-table:: VllmArguments
    :widths: 20 10 60 15
    :header-rows: 1
 
@@ -584,7 +711,7 @@ vllm 推理
      - 推理所允许的最大的 LoRA Rank。
      - 32
    * - vllm_config
-     - str | dict
+     - Optional[Union[dict, str]]
      - vLLM引擎初始化配置。以字典或JSON字符串输入。
      - None
 
@@ -614,7 +741,7 @@ vllm 推理
      - nf4
    * - double_quantization
      - bool
-     - 是否在量化过程中使用双重量化，通常用于 "bitsandbytes" 4位量化训练。
+     - 是否在量化过程中使用 double quantization，通常用于 "bitsandbytes" int4 量化训练。
      - True
    * - quantization_device_map
      - Optional[Literal["auto"]]
@@ -639,7 +766,7 @@ vllm 推理
    * - export_size
      - int
      - 导出模型的文件分片大小（以GB为单位）。
-     - 1
+     - 5
    * - export_device
      - Literal["cpu", "auto"]
      - 导出模型时使用的设备，auto 可自动加速导出。
@@ -767,4 +894,78 @@ vllm 推理
      - str
      - 默认的 system_message，例如: "You are a helpful assistant."
      - None
+   * - skip_special_tokens
+     - bool
+     - 解码时是否忽略特殊 token。
+     - True
 
+
+SwanLab 参数
+-------------------------------------------
+.. list-table:: SwanLabArguments
+   :widths: 20 10 60 15
+   :header-rows: 1
+
+   * - 参数名称
+     - 类型
+     - 介绍
+     - 默认值
+   * - use_swanlab
+     - bool
+     - 是否使用 SwanLab。
+     - False
+   * - swanlab_project
+     - str
+     - SwanLab 中的项目名称。
+     - "llamafactory"
+   * - swanlab_workspace
+     - str
+     - SwanLab 中的工作区名称。
+     - None
+   * - swanlab_run_name
+     - str
+     - SwanLab 中的实验名称。
+     - None
+   * - swanlab_mode
+     - Literal["cloud", "local"]
+     - SwanLab 的运行模式。
+     - cloud
+   * - swanlab_api_key
+     - str
+     - SwanLab 的 API 密钥。
+     - None
+
+
+训练参数
+-------------------------------------------
+
+RAY
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. list-table:: RayArguments
+   :widths: 20 20 60 20
+   :header-rows: 1
+
+   * - 参数名称
+     - 类型
+     - 介绍
+     - 默认值
+   * - ray_run_name
+     - Optional[str]
+     - 训练结果将保存在 <ray_storage_path>/ray_run_name 路径下。
+     - None
+   * - ray_storage_path
+     - str
+     - 保存训练结果的存储路径。
+     - ./saves
+   * - ray_num_workers
+     - int
+     - Ray 训练所使用的工作进程数量。
+     - 1
+   * - resources_per_worker
+     - Union[dict, str]
+     - 每个工作进程分配的资源。默认使用 1 GPU。
+     - {"GPU": 1}
+   * - placement_strategy
+     - Literal["SPREAD", "PACK", "STRICT_SPREAD", "STRICT_PACK"]
+     - Ray 训练的资源调度策略。可选值包括 SPREAD、PACK、STRICT_SPREAD 和 STRICT_PACK。
+     - PACK
