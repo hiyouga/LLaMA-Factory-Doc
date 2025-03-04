@@ -178,5 +178,7 @@ Extra Dependency
     - 提供了加载 Qwen v1 模型所需的包。
   * - modelscope
     - 魔搭社区，提供了预训练模型和数据集的下载途径。
+  * - swanlab
+    - 开源训练跟踪工具 SwanLab，用于记录与可视化训练过程
   * - dev
     - 用于 LLaMA Factory 开发维护。
