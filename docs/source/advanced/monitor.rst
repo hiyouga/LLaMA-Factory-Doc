@@ -29,6 +29,10 @@ SwanLab 是一个开源的训练跟踪与可视化工具，云端和离线均可
 
 .. image:: ../assets/advanced/swanlab-ui.png
 
+可视化样例：
+
+.. image:: ../assets/advanced/swanlab-example.png
+
 
 .. _TensorBoard:
 TensorBoard
