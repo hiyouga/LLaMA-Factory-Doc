@@ -8,7 +8,7 @@ LLaMA-Factory 支持多种调优算法，包括： :ref:`Full Parameter Fine-tun
 .. _full:
 
 Full Parameter Fine-tuning
---------------------
+--------------------------
 全参微调指的是在训练过程中对于预训练模型的所有权重都进行更新，但其对显存的要求是巨大的。
 
 .. 以 <TODO> 为例子
@@ -195,8 +195,8 @@ Galore
 
 .. warning:: 
 
-  * 不要将 LoRA 和 GaLore/BAdam 一起使用。
-  * ``galore_layerwise``为 ``true``时请不要设置 ``gradient_accumulation``参数。
+   * 不要将 LoRA 和 GaLore/BAdam 一起使用。
+   * ``galore_layerwise``为 ``true``时请不要设置 ``gradient_accumulation``参数。
 
 .. list-table:: GaLoreArguments
    :widths: 30 10 60
@@ -258,10 +258,10 @@ BAdam 是一种内存高效的全参优化方法，您通过配置 ``BAdamArgume
 
 .. warning:: 
 
-  * 不要将 LoRA 和 GaLore/BAdam 一起使用。
-  * 使用 BAdam 时请设置 ``finetuning_type`` 为 ``full`` 且 ``pure_bf16`` 为 ``True`` 。
-  * ``badam_mode = layer`` 时仅支持使用 DeepSpeed ZeRO3 进行 **单卡** 或 **多卡** 训练。
-  * ``badam_mode = ratio`` 时仅支持 **单卡** 训练。
+   * 不要将 LoRA 和 GaLore/BAdam 一起使用。
+   * 使用 BAdam 时请设置 ``finetuning_type`` 为 ``full`` 且 ``pure_bf16`` 为 ``True`` 。
+   * ``badam_mode = layer`` 时仅支持使用 DeepSpeed ZeRO3 进行 **单卡** 或 **多卡** 训练。
+   * ``badam_mode = ratio`` 时仅支持 **单卡** 训练。
 
 
 .. list-table:: BAdamArgument
