@@ -44,6 +44,10 @@ sphinx-build -b html -D language=en ./source/ build/html/en
 
 to build HTML from the .po files.
 
+You can preview the corresponding HTML files in `LLaMA-Factory-Doc/docs/build/html/en` before updating.
+
+
+
 ## Acknowledgement
 
 This repo benefits from [Qwen2](https://github.com/QwenLM/Qwen2). Thanks for their wonderful works.

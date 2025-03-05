@@ -51,7 +51,7 @@ msgstr ""
 #: ../../source/index.rst:13 077f6949e74e422b8b48597f40d2477b
 msgid "训练算法：（增量）预训练、（多模态）指令监督微调、奖励模型训练、PPO 训练、DPO 训练、KTO 训练、ORPO 训练等等。"
 msgstr ""
-"Training algorithms: (incremental) pre-training, (multimodal) instruction supervision fine-tuning, "
+"Training Support: (incremental) pre-training, (multimodal) instruction supervision fine-tuning, "
 "reward model training, PPO training, DPO training, KTO training, ORPO training, etc."
 
 #: ../../source/index.rst:14 9a77247f1f9840ef9c36996e4b2eb826
@@ -59,28 +59,29 @@ msgid ""
 "运算精度：16 比特全参数微调、冻结微调、LoRA 微调和基于 AQLM/AWQ/GPTQ/LLM.int8/HQQ/EETQ 的 "
 "2/3/4/5/6/8 比特 QLoRA 微调。"
 msgstr ""
-"Training algorithms: (incremental) pre-training, (multimodal) instruction supervision fine-tuning, "
-"reward model training, PPO training, DPO training, KTO training, ORPO training, etc."
+"Computation Precision: 16-bit full-parameter fine-tuning, frozen fine-tuning, LoRA fine-tuning, "
+"and 2/3/4/5/6/8-bit QLoRA fine-tuning based on AQLM/AWQ/GPTQ/LLM.int8/HQQ/EETQ."
+
 
 #: ../../source/index.rst:15 0881c8428e504cceb49f8723bee8388f
 msgid ""
 "优化算法：GaLore、BAdam、DoRA、LongLoRA、LLaMA Pro、Mixture-of-Depths、LoRA+、LoftQ 和"
 " PiSSA。"
 msgstr ""
-"Computation precision: 16-bit full-parameter fine-tuning, frozen fine-tuning, LoRA fine-tuning, "
-"and 2/3/4/5/6/8-bit QLoRA fine-tuning based on AQLM/AWQ/GPTQ/LLM.int8/HQQ/EETQ."
+"Optimization Algorithms: GaLore, BAdam, DoRA, LongLoRA, LLaMA Pro, Mixture-of-Depths, LoRA+, LoftQ, "
+"and PiSSA."
 
 #: ../../source/index.rst:16 d7c22e3bacbe4751b4428f62016027e2
 msgid "加速算子：FlashAttention-2 和 Unsloth。"
-msgstr "Acceleration operators: FlashAttention-2 and Unsloth."
+msgstr "Acceleration Operators: FlashAttention-2 and Unsloth."
 
 #: ../../source/index.rst:17 cce1ca8fe8734f53ab760cd5c43ee245
 msgid "推理引擎：Transformers 和 vLLM。"
-msgstr "Inference engines: Transformers and vLLM."
+msgstr "Inference Engines: Transformers and vLLM."
 
 #: ../../source/index.rst:18 adc0942f4fad4149b53604d80ad6333e
 msgid "实验监控：LlamaBoard、TensorBoard、Wandb、MLflow、SwanLab 等等。"
-msgstr "Experiment monitor: LlamaBoard, TensorBoard, Wandb, MLflow, etc."
+msgstr "Experiment Monitor: LlamaBoard, TensorBoard, Wandb, MLflow, SwanLab etc."
 
 #: ../../source/index.rst:21 a08a94d2a0dc451184589260713483a3
 msgid "Documentation"
