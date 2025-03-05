@@ -20,7 +20,9 @@ source_suffix = {
 }
 templates_path = ["_templates"]
 exclude_patterns = []
-
+locale_dirs = ['../locales/']
+gettext_uuid = True
+gettext_compact = False
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
