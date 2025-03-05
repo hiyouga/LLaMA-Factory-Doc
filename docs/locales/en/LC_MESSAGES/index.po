@@ -51,7 +51,7 @@ msgstr ""
 #: ../../source/index.rst:13 077f6949e74e422b8b48597f40d2477b
 msgid "训练算法：（增量）预训练、（多模态）指令监督微调、奖励模型训练、PPO 训练、DPO 训练、KTO 训练、ORPO 训练等等。"
 msgstr ""
-"Training Support: (incremental) pre-training, (multimodal) instruction supervision fine-tuning, "
+"Trainers: (incremental) pre-training, (multimodal) instruction supervision fine-tuning, "
 "reward model training, PPO training, DPO training, KTO training, ORPO training, etc."
 
 #: ../../source/index.rst:14 9a77247f1f9840ef9c36996e4b2eb826
@@ -81,7 +81,7 @@ msgstr "Inference Engines: Transformers and vLLM."
 
 #: ../../source/index.rst:18 adc0942f4fad4149b53604d80ad6333e
 msgid "实验监控：LlamaBoard、TensorBoard、Wandb、MLflow、SwanLab 等等。"
-msgstr "Experiment Monitor: LlamaBoard, TensorBoard, Wandb, MLflow, SwanLab etc."
+msgstr "Experiment Monitors: LlamaBoard, TensorBoard, Wandb, MLflow, SwanLab etc."
 
 #: ../../source/index.rst:21 a08a94d2a0dc451184589260713483a3
 msgid "Documentation"

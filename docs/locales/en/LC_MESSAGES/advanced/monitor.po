@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../source/advanced/monitor.rst:2 23168f5ab6e041f5ab8a90e193636788
 msgid "实验监控"
-msgstr "Monitor"
+msgstr "Monitors"
 
 #: ../../source/advanced/monitor.rst:4 84a533f055934d13a7ba576233a7b26d
 msgid ""
